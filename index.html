@@ -23,13 +23,12 @@
 <ui-gmap-google-map center='map.center' zoom='map.zoom'>
     <ui-gmap-markers models="marker" idkey="'id'" coords="'coord'" click="onClick()" events="markers.events"
                      labelContent='"name"' labelClass='"marker-labels"'>
-
         <ui-gmap-windows show="show" closeClick="closeClick()">
             <div ng-non-bindable>
                 <h3>{{name}}</h3>
                 <p>{{address}}</p>
                 <p>{{telp}}</p>
-                <p>{{websit}}</p>
+                <p>{{website}}</p>
                 <p>{{fs}}</p>
             </div>
         </ui-gmap-windows>
