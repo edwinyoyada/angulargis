@@ -6,13 +6,13 @@ gisApp.controller("firstController", function($scope, uiGmapGoogleMapApi, Organi
     // uiGmapGoogleMapApi is a promise.
     // The "then" callback function provides the google.maps object.
     uiGmapGoogleMapApi.then(function(maps) {
-    	console.log(Organization.get());
     	$scope.map = { center: { latitude: -2.3163654, longitude: 119.0851044 }, zoom: 6 };
-    	$scope.marker = adiraData;
+    	$scope.marker = Organization.query();
 
     	$scope.doSearch = function() {
-    		var searchKeyword = $scope.search;
-    		console.log(searchKeyword);
+    		var searchKeyword = $scope.search; console.log(searchKeyword);
+    		var markers = Organization.query({ name: searchKeyword }); console.log(markers);
+    		$scope.marker = markers;
     	}
     });
 });

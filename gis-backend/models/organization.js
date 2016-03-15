@@ -5,7 +5,7 @@ var organizationSchema = new Schema ({
 	name: String,
 	address: String,
 	phone: String,
-	coord: [{ latitude: String, longitude: String }],
+	coord: { latitude: String, longitude: String },
 	website: String,
 	fs: String,
 	pusat: String

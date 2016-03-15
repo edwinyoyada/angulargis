@@ -18,7 +18,19 @@ var Organization = require('./models/organization');
 var router = express.Router();
 
 router.use(function(req, res, next) {
-	console.log('middleware activated');
+	// console.log('middleware activated');
+	// Website you wish to allow to connect
+    res.setHeader('Access-Control-Allow-Origin', 'http://gis.local:8000');
+
+    // Request methods you wish to allow
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+
+    // Request headers you wish to allow
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+
+    // Set to true if you need the website to include cookies in the requests sent
+    // to the API (e.g. in case you use sessions)
+    res.setHeader('Access-Control-Allow-Credentials', true);
 	next();
 })
 
@@ -32,7 +44,7 @@ router.route('/organizations')
 			org.name = req.body.name;
 			org.address = req.body.address;
 			org.telp = req.body.telp;
-			// org.coord = { latitude: req.body.latitude, longitude: req.body.longitude };
+			org.coord = { latitude: req.body.latitude, longitude: req.body.longitude };
 			org.website = req.body.website;
 			org.fs = req.body.fs;
 			org.pusat = req.body.pusat;
@@ -45,12 +57,22 @@ router.route('/organizations')
 			});
 		})
 		.get(function(req, res) {
-			Organization.find(function (err, orgs) {
-				if(err)
-					res.send(err);
+			if(req.query['name']) {
+				Organization.find({ name: req.query['name'] }, function (err, orgs) {
+					if(err)
+						res.send(err);
 
-				res.json(orgs);
-			})
+					res.json(orgs);
+				});
+			}
+			else {
+				Organization.find(function (err, orgs) {
+					if(err)
+						res.send(err);
+
+					res.json(orgs);
+				})
+			}
 		});
 
 //ROUTES REGISTRATION
