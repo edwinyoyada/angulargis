@@ -19,7 +19,7 @@ gisApp.controller("firstController", function($scope, uiGmapGoogleMapApi, Organi
 
 		$scope.onClick =function(marker, eventName, model) {
 
-			if(lastModel!=null){
+			if(lastModel!=null && lastModel!=model){
 				lastModel.show = false;
 			}
 			lastModel = model;
