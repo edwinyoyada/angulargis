@@ -5,6 +5,8 @@ gisApp.controller("firstController", function($scope, uiGmapGoogleMapApi, Organi
 
     // uiGmapGoogleMapApi is a promise.
     // The "then" callback function provides the google.maps object.
+
+	var lastModel = null;
     uiGmapGoogleMapApi.then(function(maps) {
     	$scope.map = { center: { latitude: -2.3163654, longitude: 119.0851044 }, zoom: 6 };
     	$scope.marker = Organization.query();
@@ -14,5 +16,15 @@ gisApp.controller("firstController", function($scope, uiGmapGoogleMapApi, Organi
     		var markers = Organization.query({ name: searchKeyword }); console.log(markers);
     		$scope.marker = markers;
     	}
+
+		$scope.onClick =function(marker, eventName, model) {
+
+			if(lastModel!=null){
+				lastModel.show = false;
+			}
+			lastModel = model;
+		};
     });
+
+
 });
