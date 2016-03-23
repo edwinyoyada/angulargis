@@ -1,3 +1,5 @@
+var organizationModel = require('./../models/organization');
+
 var organizationLogic = (function(vars, type) {
   var fields = vars;
 
@@ -8,7 +10,7 @@ var organizationLogic = (function(vars, type) {
   }
 
   return {
-    postData: function() {
+    postData: function(req,res) {
         var org = new organizationModel();
         org.organization_type_id= fields.organization_type_id;
     	org.conventional_type_id= fields.conventional_type_id;
@@ -38,7 +40,8 @@ var organizationLogic = (function(vars, type) {
         });
     },
 
-    getData: function() {
+    getData: function(req,res) {
+        fields = req;
       if(fields.query['name']) {
 			organizationModel.find({ name: fields.query['name'] }, function (err, orgs) {
 				if(err)
@@ -58,3 +61,5 @@ var organizationLogic = (function(vars, type) {
     }
   }
 })()
+
+module.exports = organizationLogic;

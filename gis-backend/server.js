@@ -11,9 +11,7 @@ var port = process.env.PORT || 8000;
 
 mongoose.connect('mongodb://localhost/gis');
 
-var organizationModel = require('./models/organization');
 var organizationLogic = require('./logics/organization');
-
 
 // API ROUTES
 var router = express.Router();
@@ -41,10 +39,10 @@ router.get('/', function (req, res) {
 
 router.route('/organizations')
 		.post(function(req, res) {
-      		organizationLogic.postData(req);
+      		organizationLogic.postData(req,res);
 		})
 		.get(function(req, res) {
-      		organizationLogic.getData(req);
+      		organizationLogic.getData(req,res);
 		});
 
 //ROUTES REGISTRATION
