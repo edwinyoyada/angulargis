@@ -24,7 +24,7 @@ gisApp.controller("firstController", function($scope, uiGmapGoogleMapApi, Organi
 			}
 			lastModel = model;
 		};
-    });
+  });
 
 
 });
