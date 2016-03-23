@@ -71,7 +71,7 @@
         <div class="col-md-9">
             <ui-gmap-google-map center='map.center' zoom='map.zoom'>
                 <ui-gmap-markers models="marker" idkey="'_id'" coords="'coord'" click="onClick" events="markers.events"
-                                 labelContent='"name"' labelClass='"marker-labels"'>
+                                 labelContent='"name"' labelClass='"marker-labels"' icon="'icon_url'">
                     <ui-gmap-windows show="show">
                         <div ng-non-bindable>
                             <h3>{{name}}</h3>
