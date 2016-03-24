@@ -39,10 +39,14 @@ router.get('/', function (req, res) {
 
 router.route('/organizations')
 		.post(function(req, res) {
-      		organizationLogic.postData(req,res);
+			organizationLogic.postData(req, function(data) {
+				res.json({ message: data.message });
+			});
 		})
 		.get(function(req, res) {
-      		organizationLogic.getData(req,res);
+			organizationLogic.getData(req, function(data) {
+				res.json({ message: data.message });
+			});
 		});
 
 //ROUTES REGISTRATION
