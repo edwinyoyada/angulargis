@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html ng-app="gisApp">
+<head>
+    <title></title>
+    <link rel="stylesheet" href="src/css/bootstrap.min.css">
+    <link rel="stylesheet" href="src/css/gis.css">
+    <style type="text/css">
+        html, body, #map_canvas {
+            height: 100%;
+            width: 100%;
+            margin: 0px;
+        }
+
+        #map_canvas {
+            position: relative;
+        }
+
+        .angular-google-map-container {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+        }
+
+        .marker-labels {
+            background-color: white;
+            border: 1px solid black;
+            color: red;
+            font-family: "Lucida Grande", "Arial", sans-serif;
+            font-size: 10px;
+            font-weight: bold;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .main-gis-menu-container {
+            position: absolute;
+            max-height: calc(100% - 130px);
+            background: #ffffff;
+            padding: 0 !important;
+            z-index: 9;
+            top: 100px;
+            left: 14px;
+            font-size: 1em;
+            border: 1px #4083c0 solid;
+            overflow-x: hidden;
+            overflow-y: auto;
+            border-top:0px;
+        }
+
+        .main-gis-search-container {
+            position: absolute;
+            background: #ffffff;
+            padding: 0 !important;
+            z-index: 9;
+            top: 80px;
+            left: 14px;
+            font-size: 1em;
+            border: 1px #4083c0 solid;
+            border-bottom:0px;
+            height:20px;
+        }
+        .main-header {
+            position: absolute;
+            z-index: 9;
+            left: 14px;
+            top: 15px;
+            width: calc(100% - 28px);
+            height: 55px;
+            border: 1px #4083c0 solid;
+            background: #ffffff;
+        }
+    </style>
+</head>
+<body ng-controller="firstController">
+<!--<nav class="navbar navbar-default navbar-static-top">-->
+    <!--<div class="container">-->
+        <!--<div class="navbar-header">-->
+          <!--<button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">-->
+            <!--<span class="sr-only">Toggle navigation</span>-->
+            <!--<span class="icon-bar"></span>-->
+            <!--<span class="icon-bar"></span>-->
+            <!--<span class="icon-bar"></span>-->
+          <!--</button>-->
+          <!--<a href="#" class="navbar-brand">Project name</a>-->
+        <!--</div>-->
+    <!--<div class="navbar-collapse collapse" id="navbar">-->
+      <!--<ul class="nav navbar-nav">-->
+        <!--<li class="active"><a href="#">Home</a></li>-->
+        <!--<li><a href="#about">About</a></li>-->
+        <!--<li><a href="#contact">Contact</a></li>-->
+        <!--<li class="dropdown">-->
+          <!--<a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" class="dropdown-toggle" href="#">Dropdown <span class="caret"></span></a>-->
+          <!--<ul class="dropdown-menu">-->
+            <!--<li><a href="#">Action</a></li>-->
+            <!--<li><a href="#">Another action</a></li>-->
+            <!--<li><a href="#">Something else here</a></li>-->
+            <!--<li class="divider" role="separator"></li>-->
+            <!--<li class="dropdown-header">Nav header</li>-->
+            <!--<li><a href="#">Separated link</a></li>-->
+            <!--<li><a href="#">One more separated link</a></li>-->
+          <!--</ul>-->
+        <!--</li>-->
+      <!--</ul>-->
+      <!--<ul class="nav navbar-nav navbar-right">-->
+        <!--<li><a href="../navbar/">Default</a></li>-->
+        <!--<li class="active"><a href="./">Static top <span class="sr-only">(current)</span></a></li>-->
+        <!--<li><a href="../navbar-fixed-top/">Fixed top</a></li>-->
+      <!--</ul>-->
+    <!--</div>&lt;!&ndash;/.nav-collapse &ndash;&gt;-->
+    <!--</div>-->
+<!--</nav>-->
+<div class="container" style="width:100% !important; height:100% !important">
+    <div class="row" style="height:100% !important">
+        <!--<div class="col-md-3">-->
+            <!--<div class="sidebar-menu">-->
+                <!--<ul class="list-menu">-->
+                    <!--<li><input type="textbox" ng-model="search"> <button ng-click="doSearch()">cari</button></li>-->
+                <!--</ul>-->
+                <!--<ul>-->
+                    <!--<li>-->
+                        <!--<label>-->
+                            <!--<input type="checkbox"-->
+                               <!--ng-click="selectAll($event)"-->
+                               <!--ng-checked="isSelectedAll()" >-->
+                            <!--All-->
+                        <!--</label>-->
+                    <!--</li>-->
+                    <!--<li ng-repeat="obj in organization">-->
+                        <!--<label>-->
+                            <!--<input-->
+                                    <!--type="checkbox"-->
+                                    <!--name="selected_bank[]"-->
+                                    <!--value="{{obj._id}}"-->
+                                    <!--ng-checked="filter_bank.indexOf(obj._id) > -1"-->
+                                    <!--ng-click="filterCheckboxBankClick($event,obj._id)"-->
+                            <!--&gt; {{obj.name}}-->
+                        <!--</label>-->
+                    <!--</li>-->
+                <!--</ul>-->
+            <!--</div>-->
+        <!--</div>-->
+        <div class="col-md-12" style="height:100% !important">
+            <div class="main-header">
+                <div class="navbar-brand">
+                    Geographical Information System
+                </div>
+            </div>
+            <div class="main-gis-search-container" ng-class="{'col-lg-3 col-md-3 col-sm-4 col-xs-9':IsFilterShow}">
+                <!--<div class="col-md-10">-->
+                    <!--<div class="input-group">-->
+                        <!--<input type="text" ng-model="search" class="form-control" placeholder="Search" style="border:0px;height:40px;" />-->
+                        <!--<span class="input-group-btn">-->
+                            <!--<button class="btn btn-danger" type="button" ng-click="doSearch()" style="border-radius:0;height:40px;">-->
+                                <!--<span class=" glyphicon glyphicon-search"></span>-->
+                            <!--</button>-->
+                        <!--</span>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <div class="col-md-12" style="text-align: right">
+                    <a ng-click="doHide(false)" ng-show="IsFilterShow" style="cursor:pointer">Hide Filter<span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span></a>
+                    <a ng-click="doHide(true)" ng-show="!IsFilterShow" style="cursor:pointer">Show Filter<span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></a>
+                </div>
+            </div>
+            <div class="main-gis-menu-container col-lg-3 col-md-3 col-sm-4 col-xs-9" ng-show="IsFilterShow">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <label>
+                            <input type="checkbox"
+                                   ng-click="selectAll($event)"
+                                   ng-checked="isSelectedAll()" >
+                            All Company
+                        </label>
+                    </li>
+                    <li class="list-group-item" ng-repeat="obj in organization">
+                        <label>
+                            <input
+                                    type="checkbox"
+                                    name="selected_bank[]"
+                                    value="{{obj._id}}"
+                                    ng-checked="filter_bank.indexOf(obj._id) > -1"
+                                    ng-click="filterCheckboxBankClick($event,obj._id)"
+                            > {{obj.name}}
+                        </label>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<ui-gmap-google-map center='map.center' zoom='map.zoom'>
+    <ui-gmap-markers models="marker" idkey="'_id'" coords="'coord'" click="onClick" events="markers.events"
+                     labelContent='"name"' labelClass='"marker-labels"' icon="'icon_url'">
+        <ui-gmap-windows show="show">
+            <div ng-non-bindable>
+                <h3>{{name}}</h3>
+                <p>{{address}}</p>
+                <p>{{telp}}</p>
+                <p>{{website}}</p>
+                <p>{{fs}}</p>
+            </div>
+        </ui-gmap-windows>
+    </ui-gmap-markers>
+</ui-gmap-google-map>
+
+<script src='node_modules/lodash/lodash.min.js'></script>
+<script src='node_modules/angular/angular.min.js'></script>
+<script src='node_modules/angular-resource/angular-resource.min.js'></script>
+<script src='node_modules/angular-ui-bootstrap/dist/ui-bootstrap.js'></script>
+<script src='node_modules/angular-simple-logger/dist/angular-simple-logger.min.js'></script>
+<script src='node_modules/angular-google-maps/dist/angular-google-maps.min.js'></script>
+
+<script src="src/js/adira_data.js"></script>
+<script src="src/js/app.js"></script>
+<script src="src/js/factory.js"></script>
+<script src="src/js/controller.js"></script>
+
+</body>
+</html>
+

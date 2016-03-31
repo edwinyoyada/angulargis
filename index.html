@@ -2,11 +2,26 @@
 <html ng-app="gisApp">
 <head>
     <title></title>
-    <link rel="stylesheet" href="src/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="src/materialize/css/materialize.min.css">
     <link rel="stylesheet" href="src/css/gis.css">
     <style type="text/css">
+        html, body, #map_canvas {
+            height: 100%;
+            width: 100%;
+            margin: 0px;
+        }
+
+        #map_canvas {
+            position: relative;
+        }
+
         .angular-google-map-container {
-            height: 600px;
+            position: absolute;
+            top: 64px;
+            bottom: 0;
+            right: 0;
+            left: 0;
         }
 
         .marker-labels {
@@ -19,80 +34,116 @@
             text-align: center;
             white-space: nowrap;
         }
+
+        .main-gis-menu-container {
+            position: absolute;
+            padding: 0 !important;
+            z-index: 9;
+            top: 80px;
+            left: 14px;
+        }
+
+        .main-gis-menu-container-show{
+            height:calc(100% - 130px);
+        }
+
+        .main-header {
+            position: absolute;
+            z-index: 9;
+            left: 14px;
+            top: 15px;
+            width: calc(100% - 28px);
+            height: 55px;
+            border: 1px #4083c0 solid;
+            background: #ffffff;
+        }
+
+        .main-filter-content-show
+        {
+            height:calc(100% - 125px);
+            overflow-y:auto;padding:0px;
+            padding: 0  !important;
+        }
+
+
     </style>
 </head>
 <body ng-controller="firstController">
-<nav class="navbar navbar-default navbar-static-top">
-    <div class="container">
-        <div class="navbar-header">
-          <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a href="#" class="navbar-brand">Project name</a>
-        </div>
-    <div class="navbar-collapse collapse" id="navbar">
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Home</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#contact">Contact</a></li>
-        <li class="dropdown">
-          <a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" class="dropdown-toggle" href="#">Dropdown <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li class="divider" role="separator"></li>
-            <li class="dropdown-header">Nav header</li>
-            <li><a href="#">Separated link</a></li>
-            <li><a href="#">One more separated link</a></li>
-          </ul>
-        </li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="../navbar/">Default</a></li>
-        <li class="active"><a href="./">Static top <span class="sr-only">(current)</span></a></li>
-        <li><a href="../navbar-fixed-top/">Fixed top</a></li>
-      </ul>
-    </div><!--/.nav-collapse -->
+<nav class=" teal lighten-2" role="navigation">
+    <div class="nav-wrapper" style="padding-left: 14px;padding-right: 14px"><a id="logo-container" href="#" class="brand-logo">Geographical Information System</a>
     </div>
 </nav>
-<div class="container">
+<div>
     <div class="row">
-        <div class="col-md-3">
-            <div class="sidebar-menu">
-                <ul class="list-menu">
-                    <li><input type="textbox" ng-model="search"> <button ng-click="doSearch()">cari</button></li>
-                </ul>
+        <div class="col s12">
+            <!--<div class="main-header">-->
+                <!--<div class="navbar-brand">-->
+                    <!--Geographical Information System-->
+                <!--</div>-->
+            <!--</div>-->
+            <div class="main-gis-menu-container card" ng-class="{'main-gis-menu-container-show col l3 m5 s9 ':IsFilterShow}">
+                <div class="card-action">
+                    <div class="switch">
+                        <label>
+                            Hide Filter
+                            <input type="checkbox" ng-click="showFilterClick($event)" ng-checked="IsFilterShow">
+                            <span class="lever"></span>
+                            Show Filter
+                        </label>
+                    </div>
+                </div>
+                <div class="card-content" ng-class="{'main-filter-content-show':IsFilterShow}" ng-show="IsFilterShow">
+                    <ul class="collection" style="margin:0px;">
+                        <li class="collection-item">
+                            <input type="checkbox" ng-click="selectAll($event)" class="filled-in" id="checkbox-all" ng-checked="isSelectedAll()" >
+                            <label for="checkbox-all">All Company</label>
+                        </li>
+                        <li class="collection-item" ng-repeat="obj in organization">
+                                <input class="filled-in"
+                                    type="checkbox"
+                                    name="selected_bank[]"
+                                    value="{{obj._id}}"
+                                    ng-checked="filter_bank.indexOf(obj._id) > -1"
+                                    ng-click="filterCheckboxBankClick($event,obj._id)"
+                                   ng-attr-id="{{ 'cbx-' + obj._id }}"
+                                >
+                            <label ng-attr-for="{{ 'cbx-' + obj._id }}">{{obj.name}}</label>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-action" style="text-align: right;padding-top: 11px;" ng-show="IsFilterShow">
+                    <button class="btn waves-effect waves-light" ng-click="doSearch2()" name="action">Search
+                        <!--<i class="material-icons right">Search</i>-->
+                    </button>
+                </div>
             </div>
-        </div>
-        <div class="col-md-9">
-            <ui-gmap-google-map center='map.center' zoom='map.zoom'>
-                <ui-gmap-markers models="marker" idkey="'_id'" coords="'coord'" click="onClick" events="markers.events"
-                                 labelContent='"name"' labelClass='"marker-labels"' icon="'icon_url'">
-                    <ui-gmap-windows show="show">
-                        <div ng-non-bindable>
-                            <h3>{{name}}</h3>
-                            <p>{{address}}</p>
-                            <p>{{telp}}</p>
-                            <p>{{website}}</p>
-                            <p>{{fs}}</p>
-                        </div>
-                    </ui-gmap-windows>
-                </ui-gmap-markers>
-            </ui-gmap-google-map>
+
         </div>
     </div>
 </div>
 
+<ui-gmap-google-map center='map.center' zoom='map.zoom' options="options">
+    <ui-gmap-markers models="marker" idkey="'_id'" coords="'coord'" click="onClick" events="markers.events"
+                     labelContent='"name"' labelClass='"marker-labels"' icon="'icon_url'">
+        <ui-gmap-windows show="show">
+            <div ng-non-bindable>
+                <h3>{{name}}</h3>
+                <p>{{address}}</p>
+                <p>{{telp}}</p>
+                <p>{{website}}</p>
+                <p>{{fs}}</p>
+            </div>
+        </ui-gmap-windows>
+    </ui-gmap-markers>
+</ui-gmap-google-map>
+
+<script src='src/js/jquery-2.2.2.min.js'></script>
 <script src='node_modules/lodash/lodash.min.js'></script>
 <script src='node_modules/angular/angular.min.js'></script>
 <script src='node_modules/angular-resource/angular-resource.min.js'></script>
-<script src='node_modules/angular-ui-bootstrap/dist/ui-bootstrap.js'></script>
 <script src='node_modules/angular-simple-logger/dist/angular-simple-logger.min.js'></script>
 <script src='node_modules/angular-google-maps/dist/angular-google-maps.min.js'></script>
+<script src='src/materialize/js/materialize.min.js'></script>
 
 <script src="src/js/adira_data.js"></script>
 <script src="src/js/app.js"></script>

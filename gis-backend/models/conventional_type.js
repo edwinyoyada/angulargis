@@ -5,4 +5,4 @@ var conventionalTypeSchema = new Schema ({
 	name: String
 });
 
-module.exports = mongoose.model('ConventionalType', organizationSchema);
+module.exports = mongoose.model('Conventional_Type', conventionalTypeSchema);

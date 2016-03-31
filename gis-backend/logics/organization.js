@@ -44,12 +44,24 @@ var organizationLogic = (function() {
 
         getData: function(req, callback) {
             if(req.query['name']) {
-                organizationModel.find({ name: req.query['name'] }, function (err, orgs) {
+                organizationModel.find({ name: new RegExp(req.query['name'], 'i') }, function (err, orgs) {
                     if(err)
                         callback({ status: false, message: err });
 
                     callback({ status: true, message: orgs });
                 });
+            }else if(req.query['ids']) {
+                if(req.query['ids']=='null')
+                {
+                    callback({status: true, message: []});
+                }else {
+                    organizationModel.find({'_id': {$in: req.query['ids']}}, function (err, orgs) {
+                        if (err)
+                            callback({status: false, message: err});
+
+                        callback({status: true, message: orgs});
+                    });
+                }
             }
             else {
                 organizationModel.find(function (err, orgs) {
@@ -57,7 +69,7 @@ var organizationLogic = (function() {
                         callback({ status: false, message: err });
 
                     callback({ status: true, message: orgs });
-                })
+                }).populate('organization_type_id');
             }
         }
     }

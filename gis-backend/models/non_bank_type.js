@@ -8,4 +8,4 @@ var nonBankTypeSchema = new Schema ({
 	}]
 });
 
-module.exports = mongoose.model('NonBankType', organizationSchema);
+module.exports = mongoose.model('Non_Bank_Type', nonBankTypeSchema);
