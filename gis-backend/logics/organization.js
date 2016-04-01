@@ -49,18 +49,27 @@ var organizationLogic = (function() {
                         callback({ status: false, message: err });
 
                     callback({ status: true, message: orgs });
-                });
-            }else if(req.query['ids']) {
-                if(req.query['ids']=='null')
+                }).populate('organization_type_id');
+            }else if(req.query['organization_names']) {
+                if(req.query['organization_names']=='null')
                 {
                     callback({status: true, message: []});
-                }else {
-                    organizationModel.find({'_id': {$in: req.query['ids']}}, function (err, orgs) {
+                }else if (!Array.isArray(req.query['organization_names']))
+                {
+                    organizationModel.find({'organization_name': req.query['organization_names']}, function (err, orgs) {
                         if (err)
                             callback({status: false, message: err});
 
                         callback({status: true, message: orgs});
-                    });
+                    }).populate('organization_type_id');
+                }
+                else {
+                    organizationModel.find({'organization_name': {$in: req.query['organization_names']}}, function (err, orgs) {
+                        if (err)
+                            callback({status: false, message: err});
+
+                        callback({status: true, message: orgs});
+                    }).populate('organization_type_id');
                 }
             }
             else {

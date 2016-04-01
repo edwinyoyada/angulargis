@@ -1,11 +1,9 @@
-var non_bank_typeModel = require('./../models/non_bank_type');
+var typeModel = require('./../models/type');
 
-var non_bank_typeLogic = (function() {
-    // }
-
+var typeLogic = (function() {
     return {
         getData: function(req, callback) {
-            non_bank_typeModel.find(function (err, orgs) {
+            typeModel.find(function (err, orgs) {
                 if(err)
                     callback({ status: false, message: err });
 
@@ -15,4 +13,4 @@ var non_bank_typeLogic = (function() {
     }
 })()
 
-module.exports = non_bank_typeLogic;
+module.exports = typeLogic;

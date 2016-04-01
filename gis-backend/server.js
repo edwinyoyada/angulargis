@@ -12,7 +12,9 @@ var port = process.env.PORT || 8000;
 mongoose.connect('mongodb://enoki:Enoki!234@128.199.119.162:27017/gis');
 
 var organizationLogic = require('./logics/organization');
-var non_bank_typeLogic = require('./logics/non_bank_type');
+var typeLogic = require('./logics/type');
+var organizationTypeLogic = require('./logics/organization_type');
+var general_organizationLogic = require('./logics/general_organization');
 
 // API ROUTES
 var router = express.Router();
@@ -38,6 +40,20 @@ router.get('/', function (req, res) {
 	res.json({message: 'asdfasdfasdf'});
 });
 
+router.route('/organization_types')
+	.get(function(req, res) {
+		organizationTypeLogic.getData(req, function(data) {
+			res.json(data.message);
+		});
+	});
+
+router.route('/general_organizations')
+	.get(function(req, res) {
+		general_organizationLogic.getData(req, function(data) {
+			res.json(data.message);
+		});
+	});
+
 router.route('/organizations')
 		.post(function(req, res) {
 			organizationLogic.postData(req, function(data) {
@@ -52,10 +68,9 @@ router.route('/organizations')
 			});
 		});
 
-router.route('/nonbanktypes')
+router.route('/types')
 	.get(function(req, res) {
-		non_bank_typeLogic.getData(req, function(data) {
-			//res.json({ message: data.message });
+		typeLogic.getData(req, function(data) {
 			res.json(data.message);
 		});
 	});

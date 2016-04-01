@@ -3,8 +3,9 @@
 <head>
     <title></title>
 
-    <link rel="stylesheet" href="src/materialize/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="src/css/gis.css">
+    <link rel="stylesheet" href="src/materialize/css/materialize.css">
     <style type="text/css">
         html, body, #map_canvas {
             height: 100%;
@@ -35,27 +36,26 @@
             white-space: nowrap;
         }
 
-        .main-gis-menu-container {
+        .menu-container{
+            height:calc(100% - 64px);
+            padding: 10px !important;
+            z-index: 1;
+        }
+        
+        .top-main-header {
+            z-index: 3;
+        }
+
+
+        .left-menu-container {
             position: absolute;
             padding: 0 !important;
-            z-index: 9;
-            top: 80px;
-            left: 14px;
+            z-index: 2;
+            top:150px;
         }
 
-        .main-gis-menu-container-show{
-            height:calc(100% - 130px);
-        }
-
-        .main-header {
-            position: absolute;
-            z-index: 9;
-            left: 14px;
-            top: 15px;
-            width: calc(100% - 28px);
-            height: 55px;
-            border: 1px #4083c0 solid;
-            background: #ffffff;
+        .left-menu-container-show{
+            height:calc(100% - 165px);
         }
 
         .main-filter-content-show
@@ -65,23 +65,75 @@
             padding: 0  !important;
         }
 
+        .select-dropdown{
+            margin:0px !important;
+        }
 
     </style>
 </head>
 <body ng-controller="firstController">
 <nav class=" teal lighten-2" role="navigation">
-    <div class="nav-wrapper" style="padding-left: 14px;padding-right: 14px"><a id="logo-container" href="#" class="brand-logo">Geographical Information System</a>
+    <div class="nav-wrapper" style="padding-left: 14px;padding-right: 14px">
+        <a id="logo-container" href="#" class="brand-logo">Geographical Information System</a>
+        <ul class="right hide-on-med-and-down">
+            <li ng-repeat="obj in organization_type_list" ng-class="{'active':(obj._id==organization_type)}">
+                <a href="#" ng-click="organizationTypeClick(obj._id)" >{{obj.name}}</a></li>
+            </li>
+        </ul>
+        <ul id="nav-mobile" class="side-nav">
+            <li ng-repeat="obj in organization_type_list" ng-class="{'active':(obj._id==organization_type)}">
+                <a href="#" ng-click="organizationTypeClick(obj._id)">{{obj.name}}</a></li>
+            </li>
+        </ul>
+        <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
     </div>
 </nav>
 <div>
     <div class="row">
-        <div class="col s12">
-            <!--<div class="main-header">-->
-                <!--<div class="navbar-brand">-->
-                    <!--Geographical Information System-->
-                <!--</div>-->
-            <!--</div>-->
-            <div class="main-gis-menu-container card" ng-class="{'main-gis-menu-container-show col l3 m5 s9 ':IsFilterShow}">
+        <div class="col s12 menu-container">
+            <div style="margin:0px;" class="top-main-header card">
+                <div class="card-action" style="padding:10px;height:65px;">
+                    <div class="col s2" style="padding-left:0px;">
+                        <select style="margin:0px;" ng-model="filter.province" ng-change="ddlProvince_change()">
+                            <option value="" disabled selected>Choose Province</option>
+                            <option value="{{ obj.id }}" ng-repeat="obj in province_list" on-finish-render="ngRepeatFinished">{{obj.name}}</option>
+                        </select>
+                    </div>
+                    <div class="col s2" style="padding-left:0px;">
+                        <select style="margin:0px;" ng-model="filter.city">
+                            <option value="" disabled selected>Choose City</option>
+                            <option value="{{ obj.id }}" ng-repeat="obj in city_list" on-finish-render="ngRepeatFinished">{{obj.type+' '+obj.name}}</option>
+                        </select>
+                    </div>
+                    <div class="col s2" style="padding-left:0px;padding-top:12px;">
+                        <input type="checkbox" class="filled-in" id="cbxHeadQuarterOnly">
+                        <label for="cbxHeadQuarterOnly" style="color:rgba(0, 0, 0, 0.87)">Headquarter Only</label>
+                    </div>
+                    <div class="col s2" style="padding-left:0px;">
+                        <select style="margin:0px;">
+                            <option value="" disabled selected>Choose Type</option>
+                            <option value="{{ obj._id }}" ng-repeat="obj in type_list" on-finish-render="ngRepeatFinished">{{obj.name}}</option>
+                        </select>
+                    </div>
+                    <div class="col s2" style="padding-left:0px;">
+                        <select style="margin:0px;">
+                            <option value="" disabled selected>Choose your option</option>
+                            <option value="1">Option 1</option>
+                            <option value="2">Option 2</option>
+                            <option value="3">Option 3</option>
+                        </select>
+                    </div>
+                    <div class="col s2" style="padding-left:0px;">
+                        <select style="margin:0px;">
+                            <option value="" disabled selected>Choose your option</option>
+                            <option value="1">Option 1</option>
+                            <option value="2">Option 2</option>
+                            <option value="3">Option 3</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div style="margin:0px;" class="left-menu-container card" ng-class="{'left-menu-container-show col l3 m5 s9 ':IsFilterShow}">
                 <div class="card-action">
                     <div class="switch">
                         <label>
@@ -96,24 +148,23 @@
                     <ul class="collection" style="margin:0px;">
                         <li class="collection-item">
                             <input type="checkbox" ng-click="selectAll($event)" class="filled-in" id="checkbox-all" ng-checked="isSelectedAll()" >
-                            <label for="checkbox-all">All Company</label>
+                            <label for="checkbox-all">All</label>
                         </li>
-                        <li class="collection-item" ng-repeat="obj in organization">
-                                <input class="filled-in"
-                                    type="checkbox"
-                                    name="selected_bank[]"
-                                    value="{{obj._id}}"
-                                    ng-checked="filter_bank.indexOf(obj._id) > -1"
-                                    ng-click="filterCheckboxBankClick($event,obj._id)"
+                        <li class="collection-item" ng-repeat="obj in general_organization_name_list">
+                            <input class="filled-in"
+                                   type="checkbox"
+                                   name="selected_organization[]"
+                                   ng-checked="filter_organization.indexOf(obj._id) > -1"
+                                   ng-click="filterCheckboxOrganizationClick($event,obj._id)"
                                    ng-attr-id="{{ 'cbx-' + obj._id }}"
-                                >
+                            >
                             <label ng-attr-for="{{ 'cbx-' + obj._id }}">{{obj.name}}</label>
                         </li>
                     </ul>
                 </div>
                 <div class="card-action" style="text-align: right;padding-top: 11px;" ng-show="IsFilterShow">
                     <button class="btn waves-effect waves-light" ng-click="doSearch2()" name="action">Search
-                        <!--<i class="material-icons right">Search</i>-->
+                        <i class="material-icons right">search</i>
                     </button>
                 </div>
             </div>
@@ -122,7 +173,7 @@
     </div>
 </div>
 
-<ui-gmap-google-map center='map.center' zoom='map.zoom' options="options">
+<ui-gmap-google-map center='map.center' zoom='map.zoom' options="options" style="z-index:10">
     <ui-gmap-markers models="marker" idkey="'_id'" coords="'coord'" click="onClick" events="markers.events"
                      labelContent='"name"' labelClass='"marker-labels"' icon="'icon_url'">
         <ui-gmap-windows show="show">
@@ -143,12 +194,24 @@
 <script src='node_modules/angular-resource/angular-resource.min.js'></script>
 <script src='node_modules/angular-simple-logger/dist/angular-simple-logger.min.js'></script>
 <script src='node_modules/angular-google-maps/dist/angular-google-maps.min.js'></script>
-<script src='src/materialize/js/materialize.min.js'></script>
+<script src='src/materialize/js/materialize.js'></script>
 
 <script src="src/js/adira_data.js"></script>
 <script src="src/js/app.js"></script>
 <script src="src/js/factory.js"></script>
 <script src="src/js/controller.js"></script>
+
+<script>
+    $('.button-collapse').sideNav();
+//    $.ajax({
+//        url:'http://api.terhubung.com/provinces',
+//        dataType:'jsonp',
+//        success:function(data){
+//            console.log(data);
+//        }
+//    })
+
+</script>
 
 </body>
 </html>
