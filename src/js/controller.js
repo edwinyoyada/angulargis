@@ -1,17 +1,4 @@
-gisApp.directive('onFinishRender', function ($timeout) {
-	return {
-		restrict: 'A',
-		link: function (scope, element, attr) {
-			if (scope.$last === true) {
-				$timeout(function () {
-					scope.$emit('ngRepeatFinished');
-				});
-			}
-		}
-	}
-});
-
-gisApp.controller("firstController", function($scope, uiGmapGoogleMapApi, Organization, OrganizationType, GeneralOrganization, Provinces, Cities,Type) {
+gisApp.controller("firstController", function($scope, uiGmapGoogleMapApi, Organization, OrganizationType, GeneralOrganization, Provinces, Cities, Type, ConventionalType) {
     // Do stuff with your $scope.
     // Note: Some of the directives require at least something to be defined originally!
     // e.g. $scope.markers = []
@@ -19,11 +6,13 @@ gisApp.controller("firstController", function($scope, uiGmapGoogleMapApi, Organi
     // uiGmapGoogleMapApi is a promise.
     // The "then" callback function provides the google.maps object.
 
-	$scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
-		$('select').material_select();
-	});
-
-	$scope.filter = {};
+	$scope.filter = {
+		city:"0",
+		province:"0",
+		type:"0",
+		sub_type:"0",
+		conventional_type:"0"
+	}
 
 	var lastModel = null;
 
@@ -37,6 +26,7 @@ gisApp.controller("firstController", function($scope, uiGmapGoogleMapApi, Organi
 	};
 
 	uiGmapGoogleMapApi.then(function(maps) {
+
     	$scope.map = {
 			center: { latitude: -2.3163654, longitude: 119.0851044 },
 			zoom: 6,
@@ -57,19 +47,54 @@ gisApp.controller("firstController", function($scope, uiGmapGoogleMapApi, Organi
 			$scope.general_organization_name_list = GeneralOrganization.query({ organizationTypeID:$scope.organization_type});
 		});
 
-		$scope.province_list = Provinces.query();
-		$scope.type_list = Type.query(function(data){
-			//$scope.sub_type_list = $scope.organization_type_list[0]._id;
-			//$scope.general_organization_name_list = GeneralOrganization.query({ organizationTypeID:$scope.organization_type});
+		$scope.province_list = Provinces.query(function(data){
+			$scope.filter.province="0";
 		});
 
-		console.log($scope.type_list);
+		$scope.type_list = Type.query(function(data){
+			$scope.filter.type="0";
+		});
+
+		$scope.conventional_type_list = ConventionalType.query(function(data){
+			$scope.filter.conventional_type="0";
+		});
 
 		$scope.ddlProvince_change = function() {
-			Cities.get({'id':$scope.filter.province},function(data){
-				$scope.city_list = data.cities;
-				$scope.filter.city="";
-			})
+			$scope.city_list=[];
+			if($scope.filter.province!=null)
+			{
+				Cities.get({'id':$scope.filter.province},function(data){
+					$scope.city_list = data.cities;
+					$scope.filter.city="0";
+				});
+			}
+		};
+
+		$scope.ddlType_change = function() {
+			$scope.sub_type_list=[];
+			if($scope.filter.type!="All") {
+				var selected_type = $scope.type_list.filter(function (obj) {
+					return (obj._id == $scope.filter.type);
+				})[0];
+
+				if (selected_type != null) {
+					$scope.sub_type_list = selected_type.sub_type;
+				}
+			}else{
+				if($scope.type_list!=null)
+				{
+					$scope.sub_type_list = [];
+					$scope.type_list.forEach(function(obj){
+						if(obj.sub_type!=null)
+						{
+							$scope.sub_type_list = $scope.sub_type_list.concat(obj.sub_type);
+						}
+					});
+				}
+			}
+			$scope.sub_type_list.sort(function(a,b) {return (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0);} );
+
+			$scope.filter.sub_type="0";
 		};
 
 		$scope.marker = [];
@@ -81,7 +106,15 @@ gisApp.controller("firstController", function($scope, uiGmapGoogleMapApi, Organi
 			$scope.marker = markers;
 		}
 
-		$scope.organizationTypeClick = function organizationTypeClick(id) {
+		$scope.organizationTypeClick = function (id) {
+			$scope.filter.city="0";
+			$scope.filter.province="0";
+			$scope.filter.type="0";
+			$scope.filter.sub_type="0";
+			$scope.filter.conventional_type="0";
+			$scope.city_list=[];
+			$scope.sub_type_list=[];
+
 			$scope.organization_type = id;
 			$scope.filter_organization = [];
 			$scope.marker = [];

@@ -14,6 +14,10 @@ gisApp.factory('Type', function($resource) {
 	return $resource('http://localhost:8000/api/types/:id');
 })
 
+gisApp.factory('ConventionalType', function($resource) {
+	return $resource('http://localhost:8000/api/conventional_types/:id');
+})
+
 gisApp.factory('Provinces', function($resource) {
 	return $resource('http://api.terhubung.com/provinces');
 });

@@ -77,15 +77,17 @@
         <a id="logo-container" href="#" class="brand-logo">Geographical Information System</a>
         <ul class="right hide-on-med-and-down">
             <li ng-repeat="obj in organization_type_list" ng-class="{'active':(obj._id==organization_type)}">
-                <a href="#" ng-click="organizationTypeClick(obj._id)" >{{obj.name}}</a></li>
+                <a ng-click="organizationTypeClick(obj._id)" >{{obj.name}}</a></li>
             </li>
         </ul>
         <ul id="nav-mobile" class="side-nav">
             <li ng-repeat="obj in organization_type_list" ng-class="{'active':(obj._id==organization_type)}">
-                <a href="#" ng-click="organizationTypeClick(obj._id)">{{obj.name}}</a></li>
+                <a ng-click="organizationTypeClick(obj._id)">{{obj.name}}</a></li>
             </li>
         </ul>
-        <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+        <a href="#" class="button-collapse" data-activates="nav-mobile" data-sidenav="left" data-closeonclick="false">
+            <i class="material-icons">menu</i>
+        </a>
     </div>
 </nav>
 <div>
@@ -94,15 +96,15 @@
             <div style="margin:0px;" class="top-main-header card">
                 <div class="card-action" style="padding:10px;height:65px;">
                     <div class="col s2" style="padding-left:0px;">
-                        <select style="margin:0px;" ng-model="filter.province" ng-change="ddlProvince_change()">
-                            <option value="" disabled selected>Choose Province</option>
-                            <option value="{{ obj.id }}" ng-repeat="obj in province_list" on-finish-render="ngRepeatFinished">{{obj.name}}</option>
+                        <select style="margin:0px;" ng-model="filter.province" ng-change="ddlProvince_change()" material-select watch>
+                            <option value="0" disabled selected>Choose Province</option>
+                            <option value="{{ obj.id }}" ng-repeat="obj in province_list">{{obj.name}}</option>
                         </select>
                     </div>
                     <div class="col s2" style="padding-left:0px;">
-                        <select style="margin:0px;" ng-model="filter.city">
-                            <option value="" disabled selected>Choose City</option>
-                            <option value="{{ obj.id }}" ng-repeat="obj in city_list" on-finish-render="ngRepeatFinished">{{obj.type+' '+obj.name}}</option>
+                        <select style="margin:0px;" ng-model="filter.city" material-select watch>
+                            <option value="0" disabled selected>Choose City</option>
+                            <option value="{{ obj.id }}" ng-repeat="obj in city_list">{{obj.type+' '+obj.name}}</option>
                         </select>
                     </div>
                     <div class="col s2" style="padding-left:0px;padding-top:12px;">
@@ -110,25 +112,24 @@
                         <label for="cbxHeadQuarterOnly" style="color:rgba(0, 0, 0, 0.87)">Headquarter Only</label>
                     </div>
                     <div class="col s2" style="padding-left:0px;">
-                        <select style="margin:0px;">
-                            <option value="" disabled selected>Choose Type</option>
-                            <option value="{{ obj._id }}" ng-repeat="obj in type_list" on-finish-render="ngRepeatFinished">{{obj.name}}</option>
+                        <select style="margin:0px;" material-select watch ng-model="filter.type" ng-change="ddlType_change()" >
+                            <option value="0" disabled selected>Choose Type</option>
+                            <option value="All">All</option>
+                            <option value="{{ obj._id }}" ng-repeat="obj in type_list">{{obj.name}}</option>
                         </select>
                     </div>
                     <div class="col s2" style="padding-left:0px;">
-                        <select style="margin:0px;">
-                            <option value="" disabled selected>Choose your option</option>
-                            <option value="1">Option 1</option>
-                            <option value="2">Option 2</option>
-                            <option value="3">Option 3</option>
+                        <select style="margin:0px;" material-select watch ng-model="filter.sub_type">
+                            <option value="0" disabled selected>Choose Sub Type</option>
+                            <option value="All">All</option>
+                            <option value="{{ obj._id }}" ng-repeat="obj in sub_type_list">{{obj.name}}</option>
                         </select>
                     </div>
                     <div class="col s2" style="padding-left:0px;">
-                        <select style="margin:0px;">
-                            <option value="" disabled selected>Choose your option</option>
-                            <option value="1">Option 1</option>
-                            <option value="2">Option 2</option>
-                            <option value="3">Option 3</option>
+                        <select style="margin:0px;" material-select watch ng-model="filter.conventional_type">
+                            <option value="0" disabled selected>Choose Conventional</option>
+                            <option value="All">All</option>
+                            <option value="{{ obj._id }}" ng-repeat="obj in conventional_type_list">{{obj.name}}</option>
                         </select>
                     </div>
                 </div>
@@ -137,10 +138,10 @@
                 <div class="card-action">
                     <div class="switch">
                         <label>
-                            Hide Filter
+                            Hide
                             <input type="checkbox" ng-click="showFilterClick($event)" ng-checked="IsFilterShow">
                             <span class="lever"></span>
-                            Show Filter
+                            Show
                         </label>
                     </div>
                 </div>
@@ -175,7 +176,7 @@
 
 <ui-gmap-google-map center='map.center' zoom='map.zoom' options="options" style="z-index:10">
     <ui-gmap-markers models="marker" idkey="'_id'" coords="'coord'" click="onClick" events="markers.events"
-                     labelContent='"name"' labelClass='"marker-labels"' icon="'icon_url'">
+                     labelContent='"name"' labelClass='"marker-labels"' icon="'icon_image'">
         <ui-gmap-windows show="show">
             <div ng-non-bindable>
                 <h3>{{name}}</h3>
@@ -194,24 +195,13 @@
 <script src='node_modules/angular-resource/angular-resource.min.js'></script>
 <script src='node_modules/angular-simple-logger/dist/angular-simple-logger.min.js'></script>
 <script src='node_modules/angular-google-maps/dist/angular-google-maps.min.js'></script>
-<script src='src/materialize/js/materialize.js'></script>
+<script src='node_modules/angular-materialize/src/angular-materialize.js'></script>
+<script src='src/materialize/js/materialize.min.js'></script>
 
 <script src="src/js/adira_data.js"></script>
 <script src="src/js/app.js"></script>
 <script src="src/js/factory.js"></script>
 <script src="src/js/controller.js"></script>
-
-<script>
-    $('.button-collapse').sideNav();
-//    $.ajax({
-//        url:'http://api.terhubung.com/provinces',
-//        dataType:'jsonp',
-//        success:function(data){
-//            console.log(data);
-//        }
-//    })
-
-</script>
 
 </body>
 </html>

@@ -14,7 +14,8 @@ mongoose.connect('mongodb://enoki:Enoki!234@128.199.119.162:27017/gis');
 var organizationLogic = require('./logics/organization');
 var typeLogic = require('./logics/type');
 var organizationTypeLogic = require('./logics/organization_type');
-var general_organizationLogic = require('./logics/general_organization');
+var generalOrganizationLogic = require('./logics/general_organization');
+var conventionalTypeLogic = require('./logics/conventional_type');
 
 // API ROUTES
 var router = express.Router();
@@ -49,7 +50,7 @@ router.route('/organization_types')
 
 router.route('/general_organizations')
 	.get(function(req, res) {
-		general_organizationLogic.getData(req, function(data) {
+		generalOrganizationLogic.getData(req, function(data) {
 			res.json(data.message);
 		});
 	});
@@ -71,6 +72,13 @@ router.route('/organizations')
 router.route('/types')
 	.get(function(req, res) {
 		typeLogic.getData(req, function(data) {
+			res.json(data.message);
+		});
+	});
+
+router.route('/conventional_types')
+	.get(function(req, res) {
+		conventionalTypeLogic.getData(req, function(data) {
 			res.json(data.message);
 		});
 	});

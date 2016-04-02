@@ -1,4 +1,4 @@
-var gisApp = angular.module('gisApp', ['uiGmapgoogle-maps', 'ngResource']);
+var gisApp = angular.module('gisApp', ['uiGmapgoogle-maps', 'ngResource', 'ui.materialize']);
 
 gisApp.config(function(uiGmapGoogleMapApiProvider) {
     uiGmapGoogleMapApiProvider.configure({
