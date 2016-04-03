@@ -96,41 +96,68 @@
             <div style="margin:0px;" class="top-main-header card">
                 <div class="card-action" style="padding:10px;height:65px;">
                     <div class="col s2" style="padding-left:0px;">
-                        <select style="margin:0px;" ng-model="filter.province" ng-change="ddlProvince_change()" material-select watch>
-                            <option value="0" disabled selected>Choose Province</option>
-                            <option value="{{ obj.id }}" ng-repeat="obj in province_list">{{obj.name}}</option>
-                        </select>
+                        <div class="input-field" style="margin:0px;">
+                            <select style="margin:0px;" ng-model="filter.province" ng-change="ddlProvince_change()" material-select watch>
+                                <!--<option value="0" disabled selected>Choose Province</option>-->
+                                <optgroup label="Choose Province">
+                                    <option value="All">All</option>
+                                    <option value="{{ obj.id }}" ng-repeat="obj in province_list">{{obj.name}}</option>
+                                </optgroup>
+                            </select>
+                            <label style="top: -8px;left:0px;">Choose Province</label>
+                        </div>
                     </div>
                     <div class="col s2" style="padding-left:0px;">
-                        <select style="margin:0px;" ng-model="filter.city" material-select watch>
-                            <option value="0" disabled selected>Choose City</option>
-                            <option value="{{ obj.id }}" ng-repeat="obj in city_list">{{obj.type+' '+obj.name}}</option>
-                        </select>
+                        <div class="input-field" style="margin:0px;">
+                            <select style="margin:0px;" ng-model="filter.city" material-select watch>
+                                <!--<option value="0" disabled selected>Choose City</option>-->
+                                <optgroup label="Choose City">
+                                    <option value="All">All</option>
+                                    <option value="{{ obj.id }}" ng-repeat="obj in city_list">{{obj.type+' '+obj.name}}</option>
+                                </optgroup>
+                            </select>
+                            <label style="top: -8px;left:0px;">Choose City</label>
+                        </div>
                     </div>
                     <div class="col s2" style="padding-left:0px;padding-top:12px;">
-                        <input type="checkbox" class="filled-in" id="cbxHeadQuarterOnly">
+                        <input type="checkbox" id="cbxHeadQuarterOnly" ng-model="filter.is_hq_only">
                         <label for="cbxHeadQuarterOnly" style="color:rgba(0, 0, 0, 0.87)">Headquarter Only</label>
                     </div>
                     <div class="col s2" style="padding-left:0px;">
-                        <select style="margin:0px;" material-select watch ng-model="filter.type" ng-change="ddlType_change()" >
-                            <option value="0" disabled selected>Choose Type</option>
-                            <option value="All">All</option>
-                            <option value="{{ obj._id }}" ng-repeat="obj in type_list">{{obj.name}}</option>
-                        </select>
+                        <div class="input-field" style="margin:0px;">
+                            <select style="margin:0px;" material-select watch ng-model="filter.type" ng-change="ddlType_change()" >
+                                <!--<option value="0" disabled selected>Choose Type</option>-->
+                                <optgroup label="Choose Type">
+                                    <option value="All">All</option>
+                                    <option value="{{ obj._id }}" ng-repeat="obj in type_list">{{obj.name}}</option>
+                                </optgroup>
+                            </select>
+                            <label style="top: -8px;left:0px;">Choose Type</label>
+                        </div>
                     </div>
                     <div class="col s2" style="padding-left:0px;">
-                        <select style="margin:0px;" material-select watch ng-model="filter.sub_type">
-                            <option value="0" disabled selected>Choose Sub Type</option>
-                            <option value="All">All</option>
-                            <option value="{{ obj._id }}" ng-repeat="obj in sub_type_list">{{obj.name}}</option>
-                        </select>
+                        <div class="input-field" style="margin:0px;">
+                            <select style="margin:0px;" material-select watch ng-model="filter.sub_type">
+                                <!--<option value="0" disabled selected>Choose Sub Type</option>-->
+                                <optgroup label="Choose Sub Type">
+                                    <option value="All">All</option>
+                                    <option value="{{ obj._id }}" ng-repeat="obj in sub_type_list">{{obj.name}}</option>
+                                </optgroup>
+                            </select>
+                            <label style="top: -8px;left:0px;">Choose Sub Type</label>
+                        </div>
                     </div>
                     <div class="col s2" style="padding-left:0px;">
-                        <select style="margin:0px;" material-select watch ng-model="filter.conventional_type">
-                            <option value="0" disabled selected>Choose Conventional</option>
-                            <option value="All">All</option>
-                            <option value="{{ obj._id }}" ng-repeat="obj in conventional_type_list">{{obj.name}}</option>
-                        </select>
+                        <div class="input-field" style="margin:0px;">
+                            <select style="margin:0px;" material-select watch ng-model="filter.conventional_type">
+                                <!--<option value="0" disabled selected>Choose Conventional</option>-->
+                                <optgroup label="Choose Conventional Type">
+                                    <option value="All">All</option>
+                                    <option value="{{ obj._id }}" ng-repeat="obj in conventional_type_list">{{obj.name}}</option>
+                                </optgroup>
+                            </select>
+                            <label style="top: -8px;left:0px;">Choose Conventional Type</label>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -148,11 +175,11 @@
                 <div class="card-content" ng-class="{'main-filter-content-show':IsFilterShow}" ng-show="IsFilterShow">
                     <ul class="collection" style="margin:0px;">
                         <li class="collection-item">
-                            <input type="checkbox" ng-click="selectAll($event)" class="filled-in" id="checkbox-all" ng-checked="isSelectedAll()" >
+                            <input type="checkbox" ng-click="selectAll($event)" id="checkbox-all" ng-checked="isSelectedAll()" >
                             <label for="checkbox-all">All</label>
                         </li>
                         <li class="collection-item" ng-repeat="obj in general_organization_name_list">
-                            <input class="filled-in"
+                            <input
                                    type="checkbox"
                                    name="selected_organization[]"
                                    ng-checked="filter_organization.indexOf(obj._id) > -1"
@@ -175,13 +202,13 @@
 </div>
 
 <ui-gmap-google-map center='map.center' zoom='map.zoom' options="options" style="z-index:10">
-    <ui-gmap-markers models="marker" idkey="'_id'" coords="'coord'" click="onClick" events="markers.events"
-                     labelContent='"name"' labelClass='"marker-labels"' icon="'icon_image'">
+    <ui-gmap-markers models="marker" idkey="'_id'" coords="'coord'" click="markerClick" events="markers.events"
+                     labelContent='"name"' labelClass='"marker-labels"' icon="'marker_image'">
         <ui-gmap-windows show="show">
             <div ng-non-bindable>
                 <h3>{{name}}</h3>
                 <p>{{address}}</p>
-                <p>{{telp}}</p>
+                <p>{{phone}}</p>
                 <p>{{website}}</p>
                 <p>{{fs}}</p>
             </div>

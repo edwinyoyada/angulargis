@@ -30,6 +30,7 @@ var organizationSchema = new Schema ({
 	hq_address: String,
 	hq_id: String,
 	icon_image: String,
+	marker_image: String,
 	website: String,
 	financial_statement: String,
 	general_organization_id: { type: Schema.Types.ObjectId, ref: 'General_Organization' }

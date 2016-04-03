@@ -50,21 +50,40 @@ var organizationLogic = (function() {
 
                     callback({ status: true, message: orgs });
                 }).populate('organization_type_id');
-            }else if(req.query['organization_names']) {
-                if(req.query['organization_names']=='null')
+            }else if(req.query['general_ids']) {
+                var general_ids = req.query['general_ids'];
+                var province = req.query['province'];
+                var city = req.query['city'];
+                var type = req.query['type'];
+                var sub_type = req.query['sub_type'];
+                var conventional = req.query['conventional'];
+                var is_hq_only = req.query['is_hq_only'];
+
+                if(general_ids=='null')
                 {
                     callback({status: true, message: []});
-                }else if (!Array.isArray(req.query['organization_names']))
-                {
-                    organizationModel.find({'organization_name': req.query['organization_names']}, function (err, orgs) {
-                        if (err)
-                            callback({status: false, message: err});
+                }else {
+                    var searchQuery= {};
+                    if (!Array.isArray(general_ids)) {
+                        searchQuery['general_organization_id']=general_ids;
+                    }
+                    else {
+                        searchQuery['general_organization_id']={$in: general_ids};
+                    }
+                    if(province!='All')
+                        searchQuery['province._id']=province;
+                    if(city!='All')
+                        searchQuery['city._id']=city;
+                    if(type!='All')
+                        searchQuery['type_id']=type;
+                    if(sub_type!='All')
+                        searchQuery['sub_type_id']=sub_type;
+                    if(conventional!='All')
+                        searchQuery['conventional_type_id']=conventional;
+                    if(is_hq_only=="true")
+                        searchQuery['is_hq']="yes";
 
-                        callback({status: true, message: orgs});
-                    }).populate('organization_type_id');
-                }
-                else {
-                    organizationModel.find({'organization_name': {$in: req.query['organization_names']}}, function (err, orgs) {
+                    organizationModel.find(searchQuery, function (err, orgs) {
                         if (err)
                             callback({status: false, message: err});
 
