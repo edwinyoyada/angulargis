@@ -46,7 +46,6 @@
             z-index: 3;
         }
 
-
         .left-menu-container {
             position: absolute;
             padding: 0 !important;
@@ -58,15 +57,41 @@
             height:calc(100% - 165px);
         }
 
-        .main-filter-content-show
+        .left-main-content-show
         {
             height:calc(100% - 125px);
             overflow-y:auto;padding:0px;
             padding: 0  !important;
         }
 
+
+        .right-main-content-show
+        {
+            /*max-height:calc(100% - 65px);*/
+            height:calc(100% - 125px);
+            overflow-y:auto;padding:0px;
+            padding: 0  !important;
+            right:14px !important;
+        }
+
+        .right-menu-container {
+            position: absolute;
+            padding: 0 !important;
+            z-index: 2;
+            top:150px;
+            right:14px !important;
+        }
+
+        .right-menu-container-show{
+            height:calc(100% - 165px);
+        }
+
         .select-dropdown{
             margin:0px !important;
+        }
+        .gm-style-iw {
+            max-width: 400px !important;
+            background-color: #fff;
         }
 
     </style>
@@ -161,6 +186,7 @@
                     </div>
                 </div>
             </div>
+
             <div style="margin:0px;" class="left-menu-container card" ng-class="{'left-menu-container-show col l3 m5 s9 ':IsFilterShow}">
                 <div class="card-action">
                     <div class="switch">
@@ -172,7 +198,7 @@
                         </label>
                     </div>
                 </div>
-                <div class="card-content" ng-class="{'main-filter-content-show':IsFilterShow}" ng-show="IsFilterShow">
+                <div class="card-content" ng-class="{'left-main-content-show':IsFilterShow}" ng-show="IsFilterShow">
                     <ul class="collection" style="margin:0px;">
                         <li class="collection-item">
                             <input type="checkbox" ng-click="selectAll($event)" id="checkbox-all" ng-checked="isSelectedAll()" >
@@ -194,6 +220,57 @@
                     <button class="btn waves-effect waves-light" ng-click="doSearch2()" name="action">Search
                         <i class="material-icons right">search</i>
                     </button>
+                    <button style="display:none;" ng-click="openHqWindow()" id="btnGoToHqLocation">
+                    </button>
+
+                </div>
+            </div>
+
+            <div style="margin:0px;" class="right-menu-container card" ng-class="{'right-menu-container-show col l3 m5 s9 ':IsSummaryShow}">
+                <div class="card-action">
+                    <div class="switch">
+                        <label>
+                            Hide
+                            <input type="checkbox" ng-click="showSummaryClick($event)" ng-checked="IsSummaryShow">
+                            <span class="lever"></span>
+                            Show
+                        </label>
+                    </div>
+                </div>
+                <div class="card-action" ng-show="IsSummaryShow">
+                    <h5 style="margin:0px">
+                        Summary of Area
+                    </h5>
+                </div>
+                <div class="card-content" ng-class="{'right-main-content-show':IsSummaryShow}" ng-show="IsSummaryShow">
+                    <ul class="collection" style="margin:0px;">
+                        <li class="collection-item">
+                            <b>Number of Banks</b> : {{summary.BanksTotal}}
+                        </li>
+                        <li class="collection-item">
+                            <b>Total Assets</b> : {{summary.TotalAssets}}
+                        </li>
+                        <li class="collection-item">
+                            <b>Third Party Funds</b> : {{summary.TPF}}
+                        </li>
+                        <li class="collection-item">
+                            <b>LDR</b> : {{summary.LDR}}
+                        </li>
+                        <li class="collection-item">
+                            <b>NIM</b> : {{summary.NIM}}
+                        </li>
+                        <li class="collection-item">
+                            <b>NPL</b> : {{summary.NPL}}
+                        </li>
+                        <li class="collection-item">
+                            <b>Bank terbanyak</b> :
+                            <ul class="collection" style="margin:0px;">
+                                <li class="collection-item">
+
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
                 </div>
             </div>
 
@@ -206,11 +283,26 @@
                      labelContent='"name"' labelClass='"marker-labels"' icon="'marker_image'">
         <ui-gmap-windows show="show">
             <div ng-non-bindable>
-                <h3>{{name}}</h3>
-                <p>{{address}}</p>
-                <p>{{phone}}</p>
-                <p>{{website}}</p>
-                <p>{{fs}}</p>
+                <div style="text-align:center;">
+                    <h5 style="margin-top:0px;">{{name}}</h5>
+                    <img src="{{logo_image}}" style="max-width:150px"/>
+                    <br/>
+                    <b>{{is_hq=="yes"?"HEADQUARTERS":""}}</b>
+                </div>
+                <div style="max-height:200px; overflow-y: auto;border-top: 1px solid #e0e0e0;">
+                    <p><b>Location</b> : {{city.name}}</p>
+                    <p><b>Address</b> :{{address}}</p>
+                    <p><b>Phone</b> : {{phone}}</p>
+                    <p><b>Website</b> : <a href="{{website}}" target="_blank">{{website}}</a></p>
+                    <p><b>Financial Statement</b> : {{financial_statement}}</p>
+                    <p><b>Total Assets</b> : {{asset_size}}</p>
+                    <p><b>Total Sales</b> : {{sales_size}}</p>
+                    <p><b>Third Party Funds</b> : {{third_party_funds}}</p>
+                </div>
+                <div style="text-align:center;">
+                    <p><a>Annual Report</a></p>
+                    {{is_hq=='no'?'<p><a onclick="goToHqLocation()">HQ Location</a></p>':''}}
+                </div>
             </div>
         </ui-gmap-windows>
     </ui-gmap-markers>
@@ -230,6 +322,11 @@
 <script src="src/js/factory.js"></script>
 <script src="src/js/controller.js"></script>
 
+<script>
+    function goToHqLocation(){
+        $('#btnGoToHqLocation').click();
+    }
+</script>
 </body>
 </html>
 

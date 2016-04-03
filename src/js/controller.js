@@ -43,6 +43,7 @@ gisApp.controller("firstController", function($scope, uiGmapGoogleMapApi, Organi
 		$scope.general_organization_name_list = [];
 		$scope.filter_organization = [];
 		$scope.IsFilterShow = true;
+		$scope.IsSummaryShow = true;
 		$scope.organization_type_list = OrganizationType.query(function(data){
 			$scope.organization_type = $scope.organization_type_list[0]._id;
 			$scope.general_organization_name_list = GeneralOrganization.query({ organizationTypeID:$scope.organization_type});
@@ -135,18 +136,18 @@ gisApp.controller("firstController", function($scope, uiGmapGoogleMapApi, Organi
 		};
 
 		$scope.markerClick =function(marker, eventName, model) {
-			//var phone = '';
-            //
-			//if(model.phone != null && Array.isArray(model.phone)) {
-			//	model.phone.forEach(function (obj, index) {
-			//		if (index == 0)
-			//			phone = obj.phone;
-			//		else
-			//			phone = phone + ', ' + obj.phone;
-			//	});
-            //
-			//	model.phone = phone;
-			//}
+			var phone = '';
+
+			if(model.phone != null && Array.isArray(model.phone)) {
+				model.phone.forEach(function (obj, index) {
+					if (index == 0)
+						phone = obj.phone;
+					else
+						phone = phone + ', ' + obj.phone;
+				});
+
+				model.phone = phone;
+			}
 
 			if(lastModel!=null){
 				lastModel.show = false;
@@ -181,6 +182,42 @@ gisApp.controller("firstController", function($scope, uiGmapGoogleMapApi, Organi
 			var checkbox = $event.target;
 			$scope.IsFilterShow = checkbox.checked;
 		};
+
+		$scope.showSummaryClick = function($event) {
+			var checkbox = $event.target;
+			$scope.IsSummaryShow = checkbox.checked;
+		};
+
+
+		$scope.openHqWindow = function() {
+			var hqModel = $scope.marker.filter(function (obj) {
+				return obj._id == lastModel.hq_id
+			})[0];
+
+			if (hqModel != null) {
+				var phone = '';
+
+				if(hqModel.phone != null && Array.isArray(hqModel.phone)) {
+					hqModel.phone.forEach(function (obj, index) {
+						if (index == 0)
+							phone = obj.phone;
+						else
+							phone = phone + ', ' + obj.phone;
+					});
+
+					hqModel.phone = phone;
+				}
+
+				$scope.map.center= { latitude: hqModel.coord.latitude, longitude: hqModel.coord.longitude }
+
+				lastModel.show = false;
+				hqModel.show = true;
+				lastModel = hqModel;
+			}else{
+				alert('HQ Location not found in current map. HQ Location address at '+lastModel.hq_address);
+			}
+		}
+
   });
 
 
