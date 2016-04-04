@@ -47,6 +47,7 @@ gisApp.controller("firstController", function($scope, uiGmapGoogleMapApi, Organi
 		OrganizationTotal.query({organization_type_id:$scope.organization_type,
 				province:$scope.filter.province.id, city:$scope.filter.city.id, type:$scope.filter.type, sub_type:$scope.filter.sub_type,
 				conventional:$scope.filter.conventional_type,is_hq_only:$scope.filter.is_hq_only},function(obj){
+			$scope.organization_total_list['All'] = null;
 			obj.forEach(function(v){
 				$scope.organization_total_list[v._id]= v.total_organizations;
 				$scope.organization_total_list['All']=($scope.organization_total_list['All']==null?0:$scope.organization_total_list['All'])+ v.total_organizations
