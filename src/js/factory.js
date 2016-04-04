@@ -1,6 +1,6 @@
-//var BackendUrl ='localhost:8000/';
+var BackendUrl ='localhost:8000/';
 
-var BackendUrl = window.location.href;
+//var BackendUrl = window.location.href;
 
 gisApp.factory('OrganizationType', function($resource) {
 	return $resource(BackendUrl+'api/organization_types');
