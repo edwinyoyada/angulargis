@@ -6,6 +6,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="src/css/gis.css">
     <link rel="stylesheet" href="src/materialize/css/materialize.css">
+    <link rel="stylesheet" href="src/css/custom-scrollbar.css">
     <style type="text/css">
         html, body, #map_canvas {
             height: 100%;
@@ -83,7 +84,7 @@
         }
 
         .right-menu-container-show{
-            height:calc(100% - 165px);
+            height:calc(100% - 168px);
         }
 
         .select-dropdown{
@@ -99,20 +100,25 @@
 <body ng-controller="firstController">
 <nav class=" teal lighten-2" role="navigation">
     <div class="nav-wrapper" style="padding-left: 14px;padding-right: 14px">
-        <a id="logo-container" href="#" class="brand-logo">Geographical Information System</a>
-        <ul class="right hide-on-med-and-down">
+        <a id="logo-container" href="#" class="brand-logo hide-on-med-and-down">Geographical Information System</a>
+        <ul class="right">
             <li ng-repeat="obj in organization_type_list" ng-class="{'active':(obj._id==organization_type)}">
                 <a ng-click="(obj._id==organization_type)?'':organizationTypeClick(obj._id)" >{{obj.name}}</a></li>
             </li>
         </ul>
-        <ul id="nav-mobile" class="side-nav">
-            <li ng-repeat="obj in organization_type_list" ng-class="{'active':(obj._id==organization_type)}">
-                <a ng-click="(obj._id==organization_type)?'':organizationTypeClick(obj._id)">{{obj.name}}</a></li>
-            </li>
-        </ul>
-        <a href="#" class="button-collapse" data-activates="nav-mobile" data-sidenav="left" data-closeonclick="false">
-            <i class="material-icons">menu</i>
-        </a>
+        <!--<ul class="right hide-on-med-and-down">-->
+            <!--<li ng-repeat="obj in organization_type_list" ng-class="{'active':(obj._id==organization_type)}">-->
+                <!--<a ng-click="(obj._id==organization_type)?'':organizationTypeClick(obj._id)" >{{obj.name}}</a></li>-->
+            <!--</li>-->
+        <!--</ul>-->
+        <!--<ul id="nav-mobile" class="side-nav">-->
+            <!--<li ng-repeat="obj in organization_type_list" ng-class="{'active':(obj._id==organization_type)}">-->
+                <!--<a ng-click="(obj._id==organization_type)?'':organizationTypeClick(obj._id)">{{obj.name}}</a></li>-->
+            <!--</li>-->
+        <!--</ul>-->
+        <!--<a href="#" class="button-collapse" data-activates="nav-mobile" data-sidenav="left" data-closeonclick="false">-->
+            <!--<i class="material-icons">menu</i>-->
+        <!--</a>-->
     </div>
 </nav>
 <div>
@@ -198,7 +204,7 @@
                         </label>
                     </div>
                 </div>
-                <div class="card-content" ng-class="{'left-main-content-show':IsFilterShow}" ng-show="IsFilterShow">
+                <div class="card-content style-3" ng-class="{'left-main-content-show':IsFilterShow}" ng-show="IsFilterShow">
                     <ul class="collection" style="margin:0px;">
                         <li class="collection-item">
                             <input type="checkbox" ng-click="selectAll($event)" id="checkbox-all" ng-checked="isSelectedAll()" >
@@ -226,7 +232,7 @@
                 </div>
             </div>
 
-            <div style="margin:0px;" class="right-menu-container card" ng-class="{'right-menu-container-show col l3 m5 s9 ':IsSummaryShow}">
+            <div style="margin:0px;" class="right-menu-container card " ng-class="{'right-menu-container-show col l3 m5 s9 ':IsSummaryShow}">
                 <div class="card-action">
                     <div class="switch">
                         <label>
@@ -242,7 +248,7 @@
                         Summary of Area
                     </h5>
                 </div>
-                <div class="card-content" ng-class="{'right-main-content-show':IsSummaryShow}" ng-show="IsSummaryShow">
+                <div class="card-content style-3" ng-class="{'right-main-content-show':IsSummaryShow}" ng-show="IsSummaryShow">
                     <ul class="collection" style="margin:0px;">
                         <li class="collection-item">
                             <b>Province</b> : {{filter.province.name}}
