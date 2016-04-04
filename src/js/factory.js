@@ -1,6 +1,6 @@
 //var BackendUrl ='localhost:8000/';
 
-var BackendUrl = '128.199.119.162:8000';
+var BackendUrl = 'http://128.199.119.162:8000/';
 
 gisApp.factory('OrganizationType', function($resource) {
 	return $resource(BackendUrl+'api/organization_types');
