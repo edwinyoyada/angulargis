@@ -111,14 +111,14 @@
                 <!--<a ng-click="(obj._id==organization_type)?'':organizationTypeClick(obj._id)" >{{obj.name}}</a></li>-->
             <!--</li>-->
         <!--</ul>-->
-        <!--<ul id="nav-mobile" class="side-nav">-->
-            <!--<li ng-repeat="obj in organization_type_list" ng-class="{'active':(obj._id==organization_type)}">-->
-                <!--<a ng-click="(obj._id==organization_type)?'':organizationTypeClick(obj._id)">{{obj.name}}</a></li>-->
-            <!--</li>-->
-        <!--</ul>-->
-        <!--<a href="#" class="button-collapse" data-activates="nav-mobile" data-sidenav="left" data-closeonclick="false">-->
-            <!--<i class="material-icons">menu</i>-->
-        <!--</a>-->
+        <ul id="nav-mobile" class="side-nav">
+            <li ng-repeat="obj in organization_type_list" ng-class="{'active':(obj._id==organization_type)}">
+                <a ng-click="(obj._id==organization_type)?'':organizationTypeClick(obj._id)">{{obj.name}}</a></li>
+            </li>
+        </ul>
+        <a href="#" class="button-collapse" data-activates="nav-mobile" data-sidenav="left" data-menuwidth="350" data-closeonclick="true">
+            <i class="material-icons">menu</i>
+        </a>
     </div>
 </nav>
 <div>
