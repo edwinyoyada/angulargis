@@ -69,6 +69,22 @@ router.route('/organizations')
 			});
 		});
 
+router.route('/organizations_summary')
+	.get(function(req, res) {
+		organizationLogic.getSummary(req, function(data) {
+			//res.json({ message: data.message });
+			res.json(data.message);
+		});
+	});
+
+router.route('/organizations_total')
+	.get(function(req, res) {
+		organizationLogic.getOrganizationTotal(req, function(data) {
+			//res.json({ message: data.message });
+			res.json(data.message);
+		});
+	});
+
 router.route('/types')
 	.get(function(req, res) {
 		typeLogic.getData(req, function(data) {

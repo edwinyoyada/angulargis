@@ -1,4 +1,5 @@
 var organizationModel = require('./../models/organization');
+var mongoose = require('mongoose');
 
 var organizationLogic = (function() {
     // var fields = vars;
@@ -49,7 +50,7 @@ var organizationLogic = (function() {
                         callback({ status: false, message: err });
 
                     callback({ status: true, message: orgs });
-                }).populate('organization_type_id');
+                }).populate('organization_type_id').populate('general_organization_id');
             }else if(req.query['general_ids']) {
                 var general_ids = req.query['general_ids'];
                 var province = req.query['province'];
@@ -88,7 +89,7 @@ var organizationLogic = (function() {
                             callback({status: false, message: err});
 
                         callback({status: true, message: orgs});
-                    }).populate('organization_type_id');
+                    }).populate('organization_type_id').populate('general_organization_id');
                 }
             }
             else {
@@ -97,8 +98,73 @@ var organizationLogic = (function() {
                         callback({ status: false, message: err });
 
                     callback({ status: true, message: orgs });
-                }).populate('organization_type_id');
+                }).populate('organization_type_id').populate('general_organization_id');
             }
+        },
+        getSummary: function(req, callback) {
+            var searchQuery= {};
+            var province = req.query['province'];
+            var city = req.query['city'];
+
+            var organization_type_id = req.query['organization_type_id'];
+            if(province!='All')
+                searchQuery['province._id']=parseInt( province);
+            if(city!='All')
+                searchQuery['city._id']=parseInt(city);
+            searchQuery['organization_type_id']=mongoose.Types.ObjectId(organization_type_id);
+
+            organizationModel.aggregate([
+                { $match:searchQuery},
+                { $group: {
+                    _id: '$organization_type_id',
+                    total_organizations: { $sum: 1 },
+                    total_assets: { $sum: "$asset_size"  },
+                    total_sales: { $sum: "$sales_size"  },
+                    total_third_party_funds: { $sum: "$third_party_funds"  }
+                }}
+            ], function (err, orgs) {
+                if(err)
+                    callback({ status: false, message: err });
+
+                callback({ status: true, message: orgs });
+            });
+        },
+        getOrganizationTotal: function(req, callback) {
+            var searchQuery= {};
+            var province = req.query['province'];
+            var city = req.query['city'];
+            var type = req.query['type'];
+            var sub_type = req.query['sub_type'];
+            var conventional = req.query['conventional'];
+            var is_hq_only = req.query['is_hq_only'];
+            var organization_type_id = req.query['organization_type_id'];
+
+            if(province!='All')
+                searchQuery['province._id']=parseInt( province);
+            if(city!='All')
+                searchQuery['city._id']=parseInt(city);
+            if(type!='All')
+                searchQuery['type_id']=mongoose.Types.ObjectId(type);
+            if(sub_type!='All')
+                searchQuery['sub_type_id']=mongoose.Types.ObjectId(sub_type);
+            if(conventional!='All')
+                searchQuery['conventional_type_id']=mongoose.Types.ObjectId(conventional);
+            if(is_hq_only=="true")
+                searchQuery['is_hq']="yes";
+            searchQuery['organization_type_id']=mongoose.Types.ObjectId(organization_type_id);
+
+            organizationModel.aggregate([
+                { $match:searchQuery},
+                { $group: {
+                    _id: '$general_organization_id',
+                    total_organizations: { $sum: 1 }
+                }}
+            ], function (err, orgs) {
+                if(err)
+                    callback({ status: false, message: err });
+
+                callback({ status: true, message: orgs });
+            });
         }
     }
 })()

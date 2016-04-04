@@ -102,12 +102,12 @@
         <a id="logo-container" href="#" class="brand-logo">Geographical Information System</a>
         <ul class="right hide-on-med-and-down">
             <li ng-repeat="obj in organization_type_list" ng-class="{'active':(obj._id==organization_type)}">
-                <a ng-click="organizationTypeClick(obj._id)" >{{obj.name}}</a></li>
+                <a ng-click="(obj._id==organization_type)?'':organizationTypeClick(obj._id)" >{{obj.name}}</a></li>
             </li>
         </ul>
         <ul id="nav-mobile" class="side-nav">
             <li ng-repeat="obj in organization_type_list" ng-class="{'active':(obj._id==organization_type)}">
-                <a ng-click="organizationTypeClick(obj._id)">{{obj.name}}</a></li>
+                <a ng-click="(obj._id==organization_type)?'':organizationTypeClick(obj._id)">{{obj.name}}</a></li>
             </li>
         </ul>
         <a href="#" class="button-collapse" data-activates="nav-mobile" data-sidenav="left" data-closeonclick="false">
@@ -122,7 +122,7 @@
                 <div class="card-action" style="padding:10px;height:65px;">
                     <div class="col s2" style="padding-left:0px;">
                         <div class="input-field" style="margin:0px;">
-                            <select style="margin:0px;" ng-model="filter.province" ng-change="ddlProvince_change()" material-select watch>
+                            <select style="margin:0px;" ng-model="filter.province.id" ng-change="ddlProvince_change()" id="ddlProvince" material-select watch>
                                 <!--<option value="0" disabled selected>Choose Province</option>-->
                                 <optgroup label="Choose Province">
                                     <option value="All">All</option>
@@ -134,7 +134,7 @@
                     </div>
                     <div class="col s2" style="padding-left:0px;">
                         <div class="input-field" style="margin:0px;">
-                            <select style="margin:0px;" ng-model="filter.city" material-select watch>
+                            <select style="margin:0px;" ng-model="filter.city.id" ng-change="ddlCity_change()" id="ddlCity" material-select watch>
                                 <!--<option value="0" disabled selected>Choose City</option>-->
                                 <optgroup label="Choose City">
                                     <option value="All">All</option>
@@ -145,7 +145,7 @@
                         </div>
                     </div>
                     <div class="col s2" style="padding-left:0px;padding-top:12px;">
-                        <input type="checkbox" id="cbxHeadQuarterOnly" ng-model="filter.is_hq_only">
+                        <input type="checkbox" id="cbxHeadQuarterOnly" ng-model="filter.is_hq_only" ng-click="updateOrganizationTotal()">
                         <label for="cbxHeadQuarterOnly" style="color:rgba(0, 0, 0, 0.87)">Headquarter Only</label>
                     </div>
                     <div class="col s2" style="padding-left:0px;">
@@ -162,7 +162,7 @@
                     </div>
                     <div class="col s2" style="padding-left:0px;">
                         <div class="input-field" style="margin:0px;">
-                            <select style="margin:0px;" material-select watch ng-model="filter.sub_type">
+                            <select style="margin:0px;" material-select watch ng-model="filter.sub_type" ng-change="updateOrganizationTotal()">
                                 <!--<option value="0" disabled selected>Choose Sub Type</option>-->
                                 <optgroup label="Choose Sub Type">
                                     <option value="All">All</option>
@@ -174,7 +174,7 @@
                     </div>
                     <div class="col s2" style="padding-left:0px;">
                         <div class="input-field" style="margin:0px;">
-                            <select style="margin:0px;" material-select watch ng-model="filter.conventional_type">
+                            <select style="margin:0px;" material-select watch ng-model="filter.conventional_type" ng-change="updateOrganizationTotal()">
                                 <!--<option value="0" disabled selected>Choose Conventional</option>-->
                                 <optgroup label="Choose Conventional Type">
                                     <option value="All">All</option>
@@ -202,7 +202,7 @@
                     <ul class="collection" style="margin:0px;">
                         <li class="collection-item">
                             <input type="checkbox" ng-click="selectAll($event)" id="checkbox-all" ng-checked="isSelectedAll()" >
-                            <label for="checkbox-all">All</label>
+                            <label for="checkbox-all">All{{' ('+(organization_total_list["All"]==null?'0':organization_total_list["All"])+')'}}</label>
                         </li>
                         <li class="collection-item" ng-repeat="obj in general_organization_name_list">
                             <input
@@ -212,7 +212,7 @@
                                    ng-click="filterCheckboxOrganizationClick($event,obj._id)"
                                    ng-attr-id="{{ 'cbx-' + obj._id }}"
                             >
-                            <label ng-attr-for="{{ 'cbx-' + obj._id }}">{{obj.name}}</label>
+                            <label ng-attr-for="{{ 'cbx-' + obj._id }}">{{obj.name+' ('+(organization_total_list[obj._id]==null?'0':organization_total_list[obj._id])+')'}}</label>
                         </li>
                     </ul>
                 </div>
@@ -245,31 +245,40 @@
                 <div class="card-content" ng-class="{'right-main-content-show':IsSummaryShow}" ng-show="IsSummaryShow">
                     <ul class="collection" style="margin:0px;">
                         <li class="collection-item">
-                            <b>Number of Banks</b> : {{summary.BanksTotal}}
+                            <b>Province</b> : {{filter.province.name}}
                         </li>
                         <li class="collection-item">
-                            <b>Total Assets</b> : {{summary.TotalAssets}}
+                            <b>City</b> : {{filter.city.name}}
                         </li>
                         <li class="collection-item">
-                            <b>Third Party Funds</b> : {{summary.TPF}}
+                            <b>Number of Organizations</b> : {{summary.total_organizations==null?'0':summary.total_organizations}}
                         </li>
                         <li class="collection-item">
-                            <b>LDR</b> : {{summary.LDR}}
+                            <b>Total Assets</b> : {{summary.total_assets==null?'0':summary.total_assets}}
                         </li>
                         <li class="collection-item">
-                            <b>NIM</b> : {{summary.NIM}}
+                            <b>Total Sales</b> : {{summary.total_sales==null?'0':summary.total_sales}}
                         </li>
                         <li class="collection-item">
-                            <b>NPL</b> : {{summary.NPL}}
+                            <b>Third Party Funds</b> : {{summary.total_third_party_funds==null?'0':summary.total_third_party_funds}}
                         </li>
                         <li class="collection-item">
-                            <b>Bank terbanyak</b> :
-                            <ul class="collection" style="margin:0px;">
-                                <li class="collection-item">
+                            <b>LDR</b> : {{summary.LDR==null?'0':summary.LDR}}
+                        </li>
+                        <li class="collection-item">
+                            <b>NIM</b> : {{summary.NIM==null?'0':summary.NIM}}
+                        </li>
+                        <li class="collection-item">
+                            <b>NPL</b> : {{summary.NPL==null?'0':summary.NPL}}
+                        </li>
+                        <!--<li class="collection-item">-->
+                            <!--<b>Organisasi terbanyak</b> :-->
+                            <!--<ul class="collection" style="margin:0px;">-->
+                                <!--<li class="collection-item">-->
 
-                                </li>
-                            </ul>
-                        </li>
+                                <!--</li>-->
+                            <!--</ul>-->
+                        <!--</li>-->
                     </ul>
                 </div>
             </div>
