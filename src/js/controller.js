@@ -63,11 +63,11 @@ gisApp.controller("firstController", function($scope,$http, uiGmapGoogleMapApi, 
 			zoom: 6
 		};
 
-		$scope.polys=[];
-
-		$http.get('src/js/provinsi.json').then(function (data) {
-			$scope.polys = data.data.features;
-		});
+		//$scope.polys=[];
+        //
+		//$http.get('src/js/provinsi.json').then(function (data) {
+		//	//$scope.polys = data.data.features;
+		//});
 
 		$scope.options = {
 			language:"in",
