@@ -1,4 +1,4 @@
-gisApp.controller("firstController", function($scope, uiGmapGoogleMapApi, Organization,OrganizationTotal, OrganizationType, GeneralOrganization, Provinces, Cities,AllCities, Type, ConventionalType, AreaSummary) {
+gisApp.controller("firstController", function($scope,$http, uiGmapGoogleMapApi, Organization,OrganizationTotal, OrganizationType, GeneralOrganization, Provinces, Cities,AllCities, Type, ConventionalType, AreaSummary) {
     // Do stuff with your $scope.
     // Note: Some of the directives require at least something to be defined originally!
     // e.g. $scope.markers = []
@@ -58,11 +58,17 @@ gisApp.controller("firstController", function($scope, uiGmapGoogleMapApi, Organi
 
 	uiGmapGoogleMapApi.then(function(maps) {
 
-    	$scope.map = {
+		$scope.map = {
 			center: { latitude: -2.3163654, longitude: 119.0851044 },
-			zoom: 6,
-
+			zoom: 6
 		};
+
+		$scope.polys=[];
+
+		$http.get('src/js/provinsi.json').then(function (data) {
+			$scope.polys = data.data.features;
+		});
+
 		$scope.options = {
 			language:"in",
 			mapTypeControl: true,

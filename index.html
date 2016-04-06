@@ -294,6 +294,12 @@
 </div>
 
 <ui-gmap-google-map center='map.center' zoom='map.zoom' options="options" style="z-index:10">
+    <ui-gmap-polygons models="polys" path='"geometry"'
+                      fill="{color: '#2c8aa7', opacity: '0.3'}"
+                      stroke="{ color: '#2c8aa7', weight: 3, opacity: '1.0' }" visible="true" geodesic="true" fit="false"
+                      editable="false" static="true" ng-cloak="">
+
+    </ui-gmap-polygons>
     <ui-gmap-markers models="marker" idkey="'_id'" coords="'coord'" click="markerClick" events="markers.events"
                      labelContent='"name"' labelClass='"marker-labels"' icon="'marker_image'">
         <ui-gmap-windows show="show">
@@ -323,6 +329,9 @@
     </ui-gmap-markers>
 </ui-gmap-google-map>
 
+<script type="text/javascript"
+        src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=drawing">
+</script>
 <script src='src/js/jquery-2.2.2.min.js'></script>
 <script src='node_modules/lodash/lodash.min.js'></script>
 <script src='node_modules/angular/angular.min.js'></script>
@@ -331,6 +340,9 @@
 <script src='node_modules/angular-google-maps/dist/angular-google-maps.min.js'></script>
 <script src='node_modules/angular-materialize/src/angular-materialize.js'></script>
 <script src='src/materialize/js/materialize.min.js'></script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.underscore.js"></script>
+<script src="http://cdn.rawgit.com/nmccready/angular-simple-logger/0.0.1/dist/index.js"></script>
 
 <script src="src/js/adira_data.js"></script>
 <script src="src/js/app.js"></script>
