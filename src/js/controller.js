@@ -56,6 +56,20 @@ gisApp.controller("firstController", function($scope,$http, uiGmapGoogleMapApi, 
 
 	}
 
+	$scope.polygons_events= {
+		click: function(gPoly, eventName, polyModel) {
+			alert("Polygon ID =" + polyModel.id);
+			polyModel.fill.opacity = '0.3';
+		},
+		mouseover: function(gPoly, eventName, polyModel) {
+			console.log(polyModel);
+			polyModel.fill.opacity = '1';
+		},
+		mouseout: function(gPoly, eventName, polyModel) {
+			polyModel.fill.opacity = '0.3';
+		}
+	}
+
 	uiGmapGoogleMapApi.then(function(maps) {
 
 		$scope.map = {
@@ -63,10 +77,37 @@ gisApp.controller("firstController", function($scope,$http, uiGmapGoogleMapApi, 
 			zoom: 6
 		};
 
-		//$scope.polys=[];
-        //
+		$scope.polys=[];
+
+		$http.get('src/js/IDN_adm_2_kabkota.json').then(function (data) {
+			data.data.features.forEach(function(obj,k){
+				obj.id = k;
+				if(k%2==0)
+				{
+					obj.fill = {color: 'red', opacity: '0.3'};
+				}else if(k%3==0)
+				{
+					obj.fill = {color: 'green', opacity: '0.3'};
+				}else if(k%4==0)
+				{
+					obj.fill = {color: 'yellow', opacity: '0.3'};
+				}else
+				{
+					obj.fill = {color: 'blue', opacity: '0.3'};
+				}
+			});
+			console.log(data.data.features);
+			$scope.polys = data.data.features;
+		});
+
+		//$http.get('src/js/IDN_adm_1_province.json').then(function (data) {
+		//	console.log(data.data.features);
+		//	$scope.polys = data.data.features;
+		//});
+
 		//$http.get('src/js/provinsi.json').then(function (data) {
-		//	//$scope.polys = data.data.features;
+		//	console.log(data.data.features);
+		//	$scope.polys = data.data.features;
 		//});
 
 		$scope.options = {
@@ -199,6 +240,7 @@ gisApp.controller("firstController", function($scope,$http, uiGmapGoogleMapApi, 
 			$scope.updateAreaSumary();
 			$scope.updateOrganizationTotal();
 		};
+
 
 		$scope.markerClick =function(marker, eventName, model) {
 			var phone = '';
