@@ -68,11 +68,11 @@ gisApp.controller("firstController", function ($scope, $http, uiGmapGoogleMapApi
 
     $scope.polygons_events = {
         click: function (gPoly, eventName, polyModel) {
-            alert("Polygon ID =" + polyModel.id);
-            // polyModel.fill.opacity = '0.3';
+            //alert("Polygon ID =" + polyModel.id);
+             polyModel.fill.opacity = '0.3';
         }
         , mouseover: function (gPoly, eventName, polyModel) {
-            polyModel.fill.opacity = '1';
+            polyModel.fill.opacity = '0.8';
             // polyModel.stroke.weight = '2';
         },
         mouseout: function (gPoly, eventName, polyModel) {
@@ -93,7 +93,6 @@ gisApp.controller("firstController", function ($scope, $http, uiGmapGoogleMapApi
         $scope.polys = [];
 
         $http.get('src/js/IDN_adm_2_kabkota.json').then(function (data) {
-            //var test = [];
             //data.data.features.forEach(function (obj, k) {
             //    obj.id = k;
             //    if (k % 2 == 0) {
@@ -106,15 +105,12 @@ gisApp.controller("firstController", function ($scope, $http, uiGmapGoogleMapApi
             //        obj.fill = {color: 'blue', opacity: '0.3'};
             //    }
             //    obj.stroke = {color: 'white', weight: 1, opacity: '1.0'};
-            //    //if(k<50)
-            //    test.push(obj);
             //});
-            //console.log(data.data.features);
-            //$scope.polys = test;
+            //$scope.polys = data.data.features;
             index = 0;
             $scope.poly_lists[index]=[];
             data.data.features.forEach(function (obj, k) {
-                if(k%5==0)
+                if(k%10==0)
                 {
                     index++;
                     $scope.poly_lists[index]=[];

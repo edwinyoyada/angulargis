@@ -340,19 +340,19 @@
                     <h5 style="margin-top:0px;" ng-cloak>{{name}}</h5>
                     <img src="{{logo_image}}" style="max-width:150px"/>
                     <br/>
-                    <b ng-cloak>{{is_hq=="yes"?"HEADQUARTERS":""}}</b>
+                    <b>{{is_hq=="yes"?"HEADQUARTERS":""}}</b>
                 </div>
                 <div style="max-height:200px; overflow-y: auto;border-top: 1px solid #e0e0e0;" class="style-3">
-                    <p ng-cloak><b>Location</b> : {{city.name}}</p>
-                    <p ng-cloak><b>Address</b> :{{address}}</p>
-                    <p ng-cloak><b>Phone</b> : {{phone}}</p>
-                    <p ng-cloak><b>Website</b> : <a href="{{website}}" target="_blank">{{website}}</a></p>
-                    <p ng-cloak><b>Financial Statement</b> : {{financial_statement}}</p>
-                    <p ng-cloak><b>Total Assets</b> : {{asset_size}}</p>
-                    <p ng-cloak><b>Total Sales</b> : {{sales_size}}</p>
-                    <p ng-cloak><b>Third Party Funds</b> : {{third_party_funds}}</p>
+                    <p><b>Location</b> : {{city.name}}</p>
+                    <p><b>Address</b> :{{address}}</p>
+                    <p><b>Phone</b> : {{phone}}</p>
+                    <p><b>Website</b> : <a href="{{website}}" target="_blank">{{website}}</a></p>
+                    <p><b>Financial Statement</b> : {{financial_statement}}</p>
+                    <p><b>Total Assets</b> : {{asset_size}}</p>
+                    <p><b>Total Sales</b> : {{sales_size}}</p>
+                    <p><b>Third Party Funds</b> : {{third_party_funds}}</p>
                 </div>
-                <div ng-cloak style="text-align:center;">
+                <div style="text-align:center;">
                     <p ><a>Annual Report</a></p>
                     {{is_hq=='no'?'<p><a onclick="goToHqLocation()">HQ Location</a></p>':''}}
                 </div>
