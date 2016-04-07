@@ -72,15 +72,18 @@ gisApp.controller("firstController", function ($scope, $http, uiGmapGoogleMapApi
             // polyModel.fill.opacity = '0.3';
         }
         , mouseover: function (gPoly, eventName, polyModel) {
-            console.log(polyModel);
+            polyModel.fill.opacity = '1';
             // polyModel.stroke.weight = '2';
         },
         mouseout: function (gPoly, eventName, polyModel) {
             // polyModel.stroke.weight = '1';
+            polyModel.fill.opacity = '0.3';
         }
     }
 
     uiGmapGoogleMapApi.then(function (maps) {
+        $scope.poly_lists = [];
+
 
         $scope.map = {
             center: {latitude: -2.3163654, longitude: 119.0851044},
@@ -90,8 +93,32 @@ gisApp.controller("firstController", function ($scope, $http, uiGmapGoogleMapApi
         $scope.polys = [];
 
         $http.get('src/js/IDN_adm_2_kabkota.json').then(function (data) {
-            var test = [];
+            //var test = [];
+            //data.data.features.forEach(function (obj, k) {
+            //    obj.id = k;
+            //    if (k % 2 == 0) {
+            //        obj.fill = {color: 'red', opacity: '0.3'};
+            //    } else if (k % 3 == 0) {
+            //        obj.fill = {color: 'green', opacity: '0.3'};
+            //    } else if (k % 5 == 0) {
+            //        obj.fill = {color: 'yellow', opacity: '0.3'};
+            //    } else {
+            //        obj.fill = {color: 'blue', opacity: '0.3'};
+            //    }
+            //    obj.stroke = {color: 'white', weight: 1, opacity: '1.0'};
+            //    //if(k<50)
+            //    test.push(obj);
+            //});
+            //console.log(data.data.features);
+            //$scope.polys = test;
+            index = 0;
+            $scope.poly_lists[index]=[];
             data.data.features.forEach(function (obj, k) {
+                if(k%5==0)
+                {
+                    index++;
+                    $scope.poly_lists[index]=[];
+                }
                 obj.id = k;
                 if (k % 2 == 0) {
                     obj.fill = {color: 'red', opacity: '0.3'};
@@ -103,11 +130,9 @@ gisApp.controller("firstController", function ($scope, $http, uiGmapGoogleMapApi
                     obj.fill = {color: 'blue', opacity: '0.3'};
                 }
                 obj.stroke = {color: 'white', weight: 1, opacity: '1.0'};
-                //if(k<50)
-                test.push(obj);
+
+                $scope.poly_lists[index].push(obj)
             });
-            console.log(data.data.features);
-            $scope.polys = test;
         });
 
         //$http.get('src/js/IDN_adm_1_province.json').then(function (data) {
