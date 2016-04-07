@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html ng-app="gisApp">
 <head>
-    <title></title>
+    <title>Geographical Information System</title>
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="src/css/gis.css">
     <link rel="stylesheet" href="src/materialize/css/materialize.css">
     <link rel="stylesheet" href="src/css/custom-scrollbar.css">
     <style type="text/css">
+        [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+            display: none !important;
+        }
+
         html, body, #map_canvas {
             height: 100%;
             width: 100%;
@@ -37,12 +41,12 @@
             white-space: nowrap;
         }
 
-        .menu-container{
-            height:calc(100% - 64px);
+        .menu-container {
+            height: calc(100% - 64px);
             padding: 10px !important;
             z-index: 1;
         }
-        
+
         .top-main-header {
             z-index: 3;
         }
@@ -51,45 +55,45 @@
             position: absolute;
             padding: 0 !important;
             z-index: 2;
-            top:150px;
+            top: 150px;
         }
 
-        .left-menu-container-show{
-            height:calc(100% - 165px);
+        .left-menu-container-show {
+            height: calc(100% - 165px);
         }
 
-        .left-main-content-show
-        {
-            height:calc(100% - 125px);
-            overflow-y:auto;padding:0px;
-            padding: 0  !important;
+        .left-main-content-show {
+            height: calc(100% - 125px);
+            overflow-y: auto;
+            padding: 0px;
+            padding: 0 !important;
         }
 
-
-        .right-main-content-show
-        {
+        .right-main-content-show {
             /*max-height:calc(100% - 65px);*/
-            height:calc(100% - 125px);
-            overflow-y:auto;padding:0px;
-            padding: 0  !important;
-            right:14px !important;
+            height: calc(100% - 125px);
+            overflow-y: auto;
+            padding: 0px;
+            padding: 0 !important;
+            right: 14px !important;
         }
 
         .right-menu-container {
             position: absolute;
             padding: 0 !important;
             z-index: 2;
-            top:150px;
-            right:14px !important;
+            top: 150px;
+            right: 14px !important;
         }
 
-        .right-menu-container-show{
-            height:calc(100% - 168px);
+        .right-menu-container-show {
+            height: calc(100% - 168px);
         }
 
-        .select-dropdown{
-            margin:0px !important;
+        .select-dropdown {
+            margin: 0px !important;
         }
+
         .gm-style-iw {
             max-width: 400px !important;
             background-color: #fff;
@@ -103,20 +107,21 @@
         <a id="logo-container" href="#" class="brand-logo hide-on-med-and-down">Geographical Information System</a>
         <ul class="right">
             <li ng-repeat="obj in organization_type_list" ng-class="{'active':(obj._id==organization_type)}">
-                <a ng-click="(obj._id==organization_type)?'':organizationTypeClick(obj._id)" >{{obj.name}}</a></li>
+                <a ng-click="(obj._id==organization_type)?'':organizationTypeClick(obj._id)">{{obj.name}}</a></li>
             </li>
         </ul>
         <!--<ul class="right hide-on-med-and-down">-->
-            <!--<li ng-repeat="obj in organization_type_list" ng-class="{'active':(obj._id==organization_type)}">-->
-                <!--<a ng-click="(obj._id==organization_type)?'':organizationTypeClick(obj._id)" >{{obj.name}}</a></li>-->
-            <!--</li>-->
+        <!--<li ng-repeat="obj in organization_type_list" ng-class="{'active':(obj._id==organization_type)}">-->
+        <!--<a ng-click="(obj._id==organization_type)?'':organizationTypeClick(obj._id)" >{{obj.name}}</a></li>-->
+        <!--</li>-->
         <!--</ul>-->
         <ul id="nav-mobile" class="side-nav">
             <li ng-repeat="obj in organization_type_list" ng-class="{'active':(obj._id==organization_type)}">
                 <a ng-click="(obj._id==organization_type)?'':organizationTypeClick(obj._id)">{{obj.name}}</a></li>
             </li>
         </ul>
-        <a href="#" class="button-collapse" data-activates="nav-mobile" data-sidenav="left" data-menuwidth="350" data-closeonclick="true">
+        <a href="#" class="button-collapse" data-activates="nav-mobile" data-sidenav="left" data-menuwidth="350"
+           data-closeonclick="true">
             <i class="material-icons">menu</i>
         </a>
     </div>
@@ -128,11 +133,12 @@
                 <div class="card-action" style="padding:10px;height:65px;">
                     <div class="col s2" style="padding-left:0px;">
                         <div class="input-field" style="margin:0px;">
-                            <select style="margin:0px;" ng-model="filter.province.id" ng-change="ddlProvince_change()" id="ddlProvince" material-select watch>
+                            <select style="margin:0px;" ng-model="filter.province.id" ng-change="ddlProvince_change()"
+                                    id="ddlProvince" material-select watch>
                                 <!--<option value="0" disabled selected>Choose Province</option>-->
                                 <optgroup label="Choose Province">
                                     <option value="All">All</option>
-                                    <option value="{{ obj.id }}" ng-repeat="obj in province_list">{{obj.name}}</option>
+                                    <option ng-cloak value="{{ obj.id }}" ng-repeat="obj in province_list">{{obj.name}}</option>
                                 </optgroup>
                             </select>
                             <label style="top: -8px;left:0px;">Choose Province</label>
@@ -140,27 +146,32 @@
                     </div>
                     <div class="col s2" style="padding-left:0px;">
                         <div class="input-field" style="margin:0px;">
-                            <select style="margin:0px;" ng-model="filter.city.id" ng-change="ddlCity_change()" id="ddlCity" material-select watch>
+                            <select style="margin:0px;" ng-model="filter.city.id" ng-change="ddlCity_change()"
+                                    id="ddlCity" material-select watch>
                                 <!--<option value="0" disabled selected>Choose City</option>-->
                                 <optgroup label="Choose City">
                                     <option value="All">All</option>
-                                    <option value="{{ obj.id }}" ng-repeat="obj in city_list">{{obj.type+' '+obj.name}}</option>
+                                    <option ng-cloak value="{{ obj.id }}" ng-repeat="obj in city_list">{{obj.type+'
+                                        '+obj.name}}
+                                    </option>
                                 </optgroup>
                             </select>
                             <label style="top: -8px;left:0px;">Choose City</label>
                         </div>
                     </div>
                     <div class="col s2" style="padding-left:0px;padding-top:12px;">
-                        <input type="checkbox" id="cbxHeadQuarterOnly" ng-model="filter.is_hq_only" ng-click="updateOrganizationTotal()">
+                        <input type="checkbox" id="cbxHeadQuarterOnly" ng-model="filter.is_hq_only"
+                               ng-click="updateOrganizationTotal()">
                         <label for="cbxHeadQuarterOnly" style="color:rgba(0, 0, 0, 0.87)">Headquarter Only</label>
                     </div>
                     <div class="col s2" style="padding-left:0px;">
                         <div class="input-field" style="margin:0px;">
-                            <select style="margin:0px;" material-select watch ng-model="filter.type" ng-change="ddlType_change()" >
+                            <select style="margin:0px;" material-select watch ng-model="filter.type"
+                                    ng-change="ddlType_change()">
                                 <!--<option value="0" disabled selected>Choose Type</option>-->
                                 <optgroup label="Choose Type">
                                     <option value="All">All</option>
-                                    <option value="{{ obj._id }}" ng-repeat="obj in type_list">{{obj.name}}</option>
+                                    <option ng-cloak value="{{ obj._id }}" ng-repeat="obj in type_list">{{obj.name}}</option>
                                 </optgroup>
                             </select>
                             <label style="top: -8px;left:0px;">Choose Type</label>
@@ -168,11 +179,12 @@
                     </div>
                     <div class="col s2" style="padding-left:0px;">
                         <div class="input-field" style="margin:0px;">
-                            <select style="margin:0px;" material-select watch ng-model="filter.sub_type" ng-change="updateOrganizationTotal()">
+                            <select style="margin:0px;" material-select watch ng-model="filter.sub_type"
+                                    ng-change="updateOrganizationTotal()">
                                 <!--<option value="0" disabled selected>Choose Sub Type</option>-->
                                 <optgroup label="Choose Sub Type">
                                     <option value="All">All</option>
-                                    <option value="{{ obj._id }}" ng-repeat="obj in sub_type_list">{{obj.name}}</option>
+                                    <option ng-cloak value="{{ obj._id }}" ng-repeat="obj in sub_type_list">{{obj.name}}</option>
                                 </optgroup>
                             </select>
                             <label style="top: -8px;left:0px;">Choose Sub Type</label>
@@ -180,11 +192,14 @@
                     </div>
                     <div class="col s2" style="padding-left:0px;">
                         <div class="input-field" style="margin:0px;">
-                            <select style="margin:0px;" material-select watch ng-model="filter.conventional_type" ng-change="updateOrganizationTotal()">
+                            <select style="margin:0px;" material-select watch ng-model="filter.conventional_type"
+                                    ng-change="updateOrganizationTotal()">
                                 <!--<option value="0" disabled selected>Choose Conventional</option>-->
                                 <optgroup label="Choose Conventional Type">
                                     <option value="All">All</option>
-                                    <option value="{{ obj._id }}" ng-repeat="obj in conventional_type_list">{{obj.name}}</option>
+                                    <option ng-cloak value="{{ obj._id }}" ng-repeat="obj in conventional_type_list">
+                                        {{obj.name}}
+                                    </option>
                                 </optgroup>
                             </select>
                             <label style="top: -8px;left:0px;">Choose Conventional Type</label>
@@ -193,7 +208,8 @@
                 </div>
             </div>
 
-            <div style="margin:0px;" class="left-menu-container card" ng-class="{'left-menu-container-show col l3 m5 s9 ':IsFilterShow}">
+            <div style="margin:0px;" class="left-menu-container card"
+                 ng-class="{'left-menu-container-show col l3 m5 s9 ':IsFilterShow}">
                 <div class="card-action">
                     <div class="switch">
                         <label>
@@ -204,21 +220,25 @@
                         </label>
                     </div>
                 </div>
-                <div class="card-content style-3" ng-class="{'left-main-content-show':IsFilterShow}" ng-show="IsFilterShow">
+                <div class="card-content style-3" ng-class="{'left-main-content-show':IsFilterShow}"
+                     ng-show="IsFilterShow">
                     <ul class="collection" style="margin:0px;">
                         <li class="collection-item">
-                            <input type="checkbox" ng-click="selectAll($event)" id="checkbox-all" ng-checked="isSelectedAll()" >
-                            <label for="checkbox-all">All{{' ('+(organization_total_list["All"]==null?'0':organization_total_list["All"])+')'}}</label>
+                            <input type="checkbox" ng-click="selectAll($event)" id="checkbox-all"
+                                   ng-checked="isSelectedAll()">
+                            <label for="checkbox-all" ng-cloak>All{{'
+                                ('+(organization_total_list["All"]==null?'0':organization_total_list["All"])+')'}}</label>
                         </li>
                         <li class="collection-item" ng-repeat="obj in general_organization_name_list">
                             <input
-                                   type="checkbox"
-                                   name="selected_organization[]"
-                                   ng-checked="filter_organization.indexOf(obj._id) > -1"
-                                   ng-click="filterCheckboxOrganizationClick($event,obj._id)"
-                                   ng-attr-id="{{ 'cbx-' + obj._id }}"
+                                    type="checkbox"
+                                    name="selected_organization[]"
+                                    ng-checked="filter_organization.indexOf(obj._id) > -1"
+                                    ng-click="filterCheckboxOrganizationClick($event,obj._id)"
+                                    ng-attr-id="{{ 'cbx-' + obj._id }}"
                             >
-                            <label ng-attr-for="{{ 'cbx-' + obj._id }}">{{obj.name+' ('+(organization_total_list[obj._id]==null?'0':organization_total_list[obj._id])+')'}}</label>
+                            <label ng-cloak ng-attr-for="{{ 'cbx-' + obj._id }}">{{obj.name+'
+                                ('+(organization_total_list[obj._id]==null?'0':organization_total_list[obj._id])+')'}}</label>
                         </li>
                     </ul>
                 </div>
@@ -232,7 +252,8 @@
                 </div>
             </div>
 
-            <div style="margin:0px;" class="right-menu-container card " ng-class="{'right-menu-container-show col l3 m5 s9 ':IsSummaryShow}">
+            <div style="margin:0px;" class="right-menu-container card "
+                 ng-class="{'right-menu-container-show col l3 m5 s9 ':IsSummaryShow}">
                 <div class="card-action">
                     <div class="switch">
                         <label>
@@ -248,42 +269,45 @@
                         Summary of Area
                     </h5>
                 </div>
-                <div class="card-content style-3" ng-class="{'right-main-content-show':IsSummaryShow}" ng-show="IsSummaryShow">
+                <div class="card-content style-3" ng-class="{'right-main-content-show':IsSummaryShow}"
+                     ng-show="IsSummaryShow">
                     <ul class="collection" style="margin:0px;">
-                        <li class="collection-item">
+                        <li class="collection-item" ng-cloak>
                             <b>Province</b> : {{filter.province.name}}
                         </li>
-                        <li class="collection-item">
+                        <li class="collection-item" ng-cloak>
                             <b>City</b> : {{filter.city.name}}
                         </li>
-                        <li class="collection-item">
-                            <b>Number of Organizations</b> : {{summary.total_organizations==null?'0':summary.total_organizations}}
+                        <li class="collection-item" ng-cloak>
+                            <b>Number of Organizations</b> :
+                            {{summary.total_organizations==null?'0':summary.total_organizations}}
                         </li>
-                        <li class="collection-item">
+                        <li class="collection-item" ng-cloak>
                             <b>Total Assets</b> : {{summary.total_assets==null?'0':summary.total_assets}}
                         </li>
-                        <li class="collection-item">
+                        <li class="collection-item" ng-cloak>
                             <b>Total Sales</b> : {{summary.total_sales==null?'0':summary.total_sales}}
                         </li>
-                        <li class="collection-item">
-                            <b>Third Party Funds</b> : {{summary.total_third_party_funds==null?'0':summary.total_third_party_funds}}
+                        <li class="collection-item" ng-cloak>
+                            <b>Third Party Funds</b> :
+                            {{summary.total_third_party_funds==null?'0':summary.total_third_party_funds}}
                         </li>
-                        <li class="collection-item">
+                        <li class="collection-item" ng-cloak>
                             <b>LDR</b> : {{summary.LDR==null?'0':summary.LDR}}
                         </li>
-                        <li class="collection-item">
+                        <li class="collection-item" ng-cloak>
                             <b>NIM</b> : {{summary.NIM==null?'0':summary.NIM}}
                         </li>
-                        <li class="collection-item">
+                        <li class="collection-item" ng-cloak>
                             <b>NPL</b> : {{summary.NPL==null?'0':summary.NPL}}
                         </li>
                         <!--<li class="collection-item">-->
-                            <!--<b>Organisasi terbanyak</b> :-->
-                            <!--<ul class="collection" style="margin:0px;">-->
-                                <!--<li class="collection-item">-->
+                        <!--<b>Organisasi terbanyak</b> :-->
+                        <!--<ul class="collection" style="margin:0px;">-->
+                        <!--<li class="collection-item">-->
 
-                                <!--</li>-->
-                            <!--</ul>-->
+                        <!--</li>-->
+                        <!--</ul>-->
                         <!--</li>-->
                     </ul>
                 </div>
@@ -296,7 +320,7 @@
 <ui-gmap-google-map center='map.center' zoom='map.zoom' options="options" style="z-index:10">
     <ui-gmap-polygons models="polys" path='"geometry"'
                       fill='"fill"'
-                      stroke="{ color: 'white', weight: 1, opacity: '1.0' }" visible="true" geodesic="true" fit="false"
+                      stroke="'stroke'" visible="true" geodesic="true" fit="false"
                       editable="false" static="true" ng-cloak="" events="polygons_events">
 
     </ui-gmap-polygons>
@@ -305,23 +329,23 @@
         <ui-gmap-windows show="show">
             <div ng-non-bindable>
                 <div style="text-align:center;">
-                    <h5 style="margin-top:0px;">{{name}}</h5>
+                    <h5 style="margin-top:0px;" ng-cloak>{{name}}</h5>
                     <img src="{{logo_image}}" style="max-width:150px"/>
                     <br/>
-                    <b>{{is_hq=="yes"?"HEADQUARTERS":""}}</b>
+                    <b ng-cloak>{{is_hq=="yes"?"HEADQUARTERS":""}}</b>
                 </div>
                 <div style="max-height:200px; overflow-y: auto;border-top: 1px solid #e0e0e0;" class="style-3">
-                    <p><b>Location</b> : {{city.name}}</p>
-                    <p><b>Address</b> :{{address}}</p>
-                    <p><b>Phone</b> : {{phone}}</p>
-                    <p><b>Website</b> : <a href="{{website}}" target="_blank">{{website}}</a></p>
-                    <p><b>Financial Statement</b> : {{financial_statement}}</p>
-                    <p><b>Total Assets</b> : {{asset_size}}</p>
-                    <p><b>Total Sales</b> : {{sales_size}}</p>
-                    <p><b>Third Party Funds</b> : {{third_party_funds}}</p>
+                    <p ng-cloak><b>Location</b> : {{city.name}}</p>
+                    <p ng-cloak><b>Address</b> :{{address}}</p>
+                    <p ng-cloak><b>Phone</b> : {{phone}}</p>
+                    <p ng-cloak><b>Website</b> : <a href="{{website}}" target="_blank">{{website}}</a></p>
+                    <p ng-cloak><b>Financial Statement</b> : {{financial_statement}}</p>
+                    <p ng-cloak><b>Total Assets</b> : {{asset_size}}</p>
+                    <p ng-cloak><b>Total Sales</b> : {{sales_size}}</p>
+                    <p ng-cloak><b>Third Party Funds</b> : {{third_party_funds}}</p>
                 </div>
-                <div style="text-align:center;">
-                    <p><a>Annual Report</a></p>
+                <div ng-cloak style="text-align:center;">
+                    <p ><a>Annual Report</a></p>
                     {{is_hq=='no'?'<p><a onclick="goToHqLocation()">HQ Location</a></p>':''}}
                 </div>
             </div>
@@ -350,7 +374,7 @@
 <script src="src/js/controller.js"></script>
 
 <script>
-    function goToHqLocation(){
+    function goToHqLocation() {
         $('#btnGoToHqLocation').click();
     }
 </script>
