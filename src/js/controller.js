@@ -71,7 +71,7 @@ gisApp.controller("firstController", function ($scope, $http, uiGmapGoogleMapApi
     $scope.polygons_events = {
         click: function (gPoly, eventName, polyModel) {
             //alert("Polygon ID =" + polyModel.id);
-             polyModel.fill.opacity = '0.3';
+             //polyModel.fill.opacity = '0.3';
         }
         , mouseover: function (gPoly, eventName, polyModel) {
             console.log(polyModel);

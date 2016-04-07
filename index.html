@@ -352,10 +352,10 @@
                     <p><b>Address</b> :{{address}}</p>
                     <p><b>Phone</b> : {{phone}}</p>
                     <p><b>Website</b> : <a href="{{website}}" target="_blank">{{website}}</a></p>
-                    <p><b>Financial Statement</b> : {{financial_statement}}</p>
-                    <p><b>Total Assets</b> : {{asset_size}}</p>
-                    <p><b>Total Sales</b> : {{sales_size}}</p>
-                    <p><b>Third Party Funds</b> : {{third_party_funds}}</p>
+                    <p><b>Financial Statement</b> : {{financial_statement==null?'-':financial_statement}}</p>
+                    <p><b>Total Assets</b> : {{asset_size==null?'-':asset_size}}</p>
+                    <p><b>Total Sales</b> : {{sales_size==null?'-':sales_size}}</p>
+                    <p><b>Third Party Funds</b> : {{third_party_funds==null?'-':third_party_funds}}</p>
                 </div>
                 <div style="text-align:center;">
                     <p ><a>Annual Report</a></p>
