@@ -6,6 +6,8 @@ gisApp.controller("firstController", function ($scope, $http, uiGmapGoogleMapApi
     // uiGmapGoogleMapApi is a promise.
     // The "then" callback function provides the google.maps object.
 
+    $scope.PolygonVisible = true;
+
     $scope.filter = {
         city: {
             id: "All",
@@ -57,7 +59,7 @@ gisApp.controller("firstController", function ($scope, $http, uiGmapGoogleMapApi
             conventional: $scope.filter.conventional_type,
             is_hq_only: $scope.filter.is_hq_only
         }, function (obj) {
-            $scope.organization_total_list['All'] = null;
+            $scope.organization_total_list['All'] = 0;
             obj.forEach(function (v) {
                 $scope.organization_total_list[v._id] = v.total_organizations;
                 $scope.organization_total_list['All'] = ($scope.organization_total_list['All'] == null ? 0 : $scope.organization_total_list['All']) + v.total_organizations
@@ -72,6 +74,7 @@ gisApp.controller("firstController", function ($scope, $http, uiGmapGoogleMapApi
              polyModel.fill.opacity = '0.3';
         }
         , mouseover: function (gPoly, eventName, polyModel) {
+            console.log(polyModel);
             polyModel.fill.opacity = '0.8';
             // polyModel.stroke.weight = '2';
         },
@@ -110,7 +113,7 @@ gisApp.controller("firstController", function ($scope, $http, uiGmapGoogleMapApi
             index = 0;
             $scope.poly_lists[index]=[];
             data.data.features.forEach(function (obj, k) {
-                if(k%10==0)
+                if(k%5==0)
                 {
                     index++;
                     $scope.poly_lists[index]=[];

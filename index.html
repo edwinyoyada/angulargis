@@ -224,6 +224,11 @@
                      ng-show="IsFilterShow">
                     <ul class="collection" style="margin:0px;">
                         <li class="collection-item">
+                            <input type="checkbox" ng-click="PolygonVisible=!PolygonVisible"
+                                   id="checkbox-polygonShow" ng-checked="PolygonVisible">
+                            <label for="checkbox-polygonShow" ng-cloak>Show Demography</label>
+                        </li>
+                        <li class="collection-item">
                             <input type="checkbox" ng-click="selectAll($event)" id="checkbox-all"
                                    ng-checked="isSelectedAll()">
                             <label for="checkbox-all" ng-cloak>All{{'
@@ -321,7 +326,7 @@
     <div ng-repeat="obj in poly_lists">
         <ui-gmap-polygons models="obj" path='"geometry"'
                           fill='"fill"'
-                          stroke="'stroke'" visible="true" geodesic="true" fit="false"
+                          stroke="'stroke'" visible="PolygonVisible" geodesic="true" fit="false"
                           editable="false" static="true" ng-cloak="" events="polygons_events">
 
         </ui-gmap-polygons>
@@ -337,7 +342,7 @@
         <ui-gmap-windows show="show">
             <div ng-non-bindable>
                 <div style="text-align:center;">
-                    <h5 style="margin-top:0px;" ng-cloak>{{name}}</h5>
+                    <h5 style="margin-top:0px;">{{name}}</h5>
                     <img src="{{logo_image}}" style="max-width:150px"/>
                     <br/>
                     <b>{{is_hq=="yes"?"HEADQUARTERS":""}}</b>
