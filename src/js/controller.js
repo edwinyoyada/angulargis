@@ -60,8 +60,8 @@ gisApp.controller("firstController", function($scope,$http, uiGmapGoogleMapApi, 
 		click: function(gPoly, eventName, polyModel) {
 			alert("Polygon ID =" + polyModel.id);
 			polyModel.fill.opacity = '0.3';
-		},
-		mouseover: function(gPoly, eventName, polyModel) {
+		}
+		,mouseover: function(gPoly, eventName, polyModel) {
 			console.log(polyModel);
 			polyModel.fill.opacity = '1';
 		},
@@ -80,6 +80,7 @@ gisApp.controller("firstController", function($scope,$http, uiGmapGoogleMapApi, 
 		$scope.polys=[];
 
 		$http.get('src/js/IDN_adm_2_kabkota.json').then(function (data) {
+			var test = [];
 			data.data.features.forEach(function(obj,k){
 				obj.id = k;
 				if(k%2==0)
@@ -88,16 +89,19 @@ gisApp.controller("firstController", function($scope,$http, uiGmapGoogleMapApi, 
 				}else if(k%3==0)
 				{
 					obj.fill = {color: 'green', opacity: '0.3'};
-				}else if(k%4==0)
+				}else if(k%5==0)
 				{
 					obj.fill = {color: 'yellow', opacity: '0.3'};
 				}else
 				{
 					obj.fill = {color: 'blue', opacity: '0.3'};
 				}
+
+				//if(k<50)
+					test.push(obj);
 			});
 			console.log(data.data.features);
-			$scope.polys = data.data.features;
+			$scope.polys = test;
 		});
 
 		//$http.get('src/js/IDN_adm_1_province.json').then(function (data) {
