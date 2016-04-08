@@ -1,4 +1,4 @@
-gisApp.controller("firstController", function ($scope, $http, uiGmapGoogleMapApi, Organization, OrganizationTotal, OrganizationType, GeneralOrganization, Provinces, Cities, AllCities, Type, ConventionalType, AreaSummary) {
+gisApp.controller("firstController", function ($scope, $http, uiGmapGoogleMapApi, Organization, OrganizationTotal, OrganizationType, GeneralOrganization, Provinces, Cities, AllCities, Type, ConventionalType, AreaSummary, $loading) {
     // Do stuff with your $scope.
     // Note: Some of the directives require at least something to be defined originally!
     // e.g. $scope.markers = []
@@ -6,6 +6,7 @@ gisApp.controller("firstController", function ($scope, $http, uiGmapGoogleMapApi
     // uiGmapGoogleMapApi is a promise.
     // The "then" callback function provides the google.maps object.
 
+    $loading.start('body');
     $scope.PolygonVisible = true;
 
     $scope.filter = {
@@ -59,7 +60,7 @@ gisApp.controller("firstController", function ($scope, $http, uiGmapGoogleMapApi
             conventional: $scope.filter.conventional_type,
             is_hq_only: $scope.filter.is_hq_only
         }, function (obj) {
-            $scope.organization_total_list['All'] = 0;
+            $scope.organization_total_list['All'] = null;
             obj.forEach(function (v) {
                 $scope.organization_total_list[v._id] = v.total_organizations;
                 $scope.organization_total_list['All'] = ($scope.organization_total_list['All'] == null ? 0 : $scope.organization_total_list['All']) + v.total_organizations
@@ -70,12 +71,11 @@ gisApp.controller("firstController", function ($scope, $http, uiGmapGoogleMapApi
 
     $scope.polygons_events = {
         click: function (gPoly, eventName, polyModel) {
-            //alert("Polygon ID =" + polyModel.id);
-             //polyModel.fill.opacity = '0.3';
+            alert("Polygon ID =" + polyModel.id);
+            // polyModel.fill.opacity = '0.3';
         }
         , mouseover: function (gPoly, eventName, polyModel) {
-            console.log(polyModel);
-            polyModel.fill.opacity = '0.8';
+            polyModel.fill.opacity = '1';
             // polyModel.stroke.weight = '2';
         },
         mouseout: function (gPoly, eventName, polyModel) {
@@ -132,6 +132,7 @@ gisApp.controller("firstController", function ($scope, $http, uiGmapGoogleMapApi
 
                 $scope.poly_lists[index].push(obj)
             });
+            $loading.finish('body');
         });
 
         //$http.get('src/js/IDN_adm_1_province.json').then(function (data) {

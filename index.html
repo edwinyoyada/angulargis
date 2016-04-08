@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="src/css/gis.css">
     <link rel="stylesheet" href="src/materialize/css/materialize.css">
     <link rel="stylesheet" href="src/css/custom-scrollbar.css">
+    <link rel="stylesheet" href="bower_components/angular-loading/angular-loading.css">
+
     <style type="text/css">
         [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
             display: none !important;
@@ -101,7 +103,7 @@
 
     </style>
 </head>
-<body ng-controller="firstController">
+<body ng-controller="firstController" dw-loading="body" dw-loading-options="{text: 'Loading Data...',spinnerOptions: {length:10,width: 3 }}">
 <nav class=" teal lighten-2" role="navigation">
     <div class="nav-wrapper" style="padding-left: 14px;padding-right: 14px">
         <a id="logo-container" href="#" class="brand-logo hide-on-med-and-down">Geographical Information System</a>
@@ -377,6 +379,8 @@
 <script src='node_modules/angular-google-maps/dist/angular-google-maps.min.js'></script>
 <script src='node_modules/angular-materialize/src/angular-materialize.js'></script>
 <script src='src/materialize/js/materialize.min.js'></script>
+<script src='bower_components/spin.js/spin.js'></script>
+<script src='bower_components/angular-loading/angular-loading.js'></script>
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.underscore.js"></script>
 <script src="http://cdn.rawgit.com/nmccready/angular-simple-logger/0.0.1/dist/index.js"></script>
