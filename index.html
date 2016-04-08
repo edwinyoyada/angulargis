@@ -151,8 +151,7 @@
                                 <!--<option value="0" disabled selected>Choose City</option>-->
                                 <optgroup label="Choose City">
                                     <option value="All">All</option>
-                                    <option ng-cloak value="{{ obj.id }}" ng-repeat="obj in city_list">{{obj.type+'
-                                        '+obj.name}}
+                                    <option ng-cloak value="{{ obj.id }}" ng-repeat="obj in city_list">{{obj.type+' '+obj.name}}
                                     </option>
                                 </optgroup>
                             </select>
@@ -175,19 +174,6 @@
                                 </optgroup>
                             </select>
                             <label style="top: -8px;left:0px;">Choose Type</label>
-                        </div>
-                    </div>
-                    <div class="col s2" style="padding-left:0px;">
-                        <div class="input-field" style="margin:0px;">
-                            <select style="margin:0px;" material-select watch ng-model="filter.sub_type"
-                                    ng-change="updateOrganizationTotal()">
-                                <!--<option value="0" disabled selected>Choose Sub Type</option>-->
-                                <optgroup label="Choose Sub Type">
-                                    <option value="All">All</option>
-                                    <option ng-cloak value="{{ obj._id }}" ng-repeat="obj in sub_type_list">{{obj.name}}</option>
-                                </optgroup>
-                            </select>
-                            <label style="top: -8px;left:0px;">Choose Sub Type</label>
                         </div>
                     </div>
                     <div class="col s2" style="padding-left:0px;">
@@ -248,7 +234,7 @@
                     </ul>
                 </div>
                 <div class="card-action" style="text-align: right;padding-top: 11px;" ng-show="IsFilterShow">
-                    <button class="btn waves-effect waves-light" ng-click="doSearch2()" name="action">Search
+                    <button class="btn waves-effect waves-light" ng-click="loadMapData()" name="action">Load Map Data
                         <i class="material-icons right">search</i>
                     </button>
                     <button style="display:none;" ng-click="openHqWindow()" id="btnGoToHqLocation">
