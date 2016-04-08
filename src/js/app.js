@@ -1,4 +1,4 @@
-var gisApp = angular.module('gisApp', ['uiGmapgoogle-maps', 'ngResource', 'ui.materialize']);
+var gisApp = angular.module('gisApp', ['uiGmapgoogle-maps', 'ngResource', 'ui.materialize','darthwade.dwLoading']);
 
 gisApp.config(function(uiGmapGoogleMapApiProvider) {
     uiGmapGoogleMapApiProvider.configure({

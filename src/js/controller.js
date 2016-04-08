@@ -6,6 +6,7 @@ gisApp.controller("firstController", function ($scope, $http, uiGmapGoogleMapApi
     // uiGmapGoogleMapApi is a promise.
     // The "then" callback function provides the google.maps object.
 
+    $loading.start('body');
     $scope.PolygonVisible = true;
 
     $scope.filter = {
@@ -62,7 +63,7 @@ gisApp.controller("firstController", function ($scope, $http, uiGmapGoogleMapApi
             $scope.organization_total_list['All'] = 0;
             obj.forEach(function (v) {
                 $scope.organization_total_list[v._id] = v.total_organizations;
-                $scope.organization_total_list['All'] = $scope.organization_total_list['All'] + v.total_organizations
+                $scope.organization_total_list['All'] = ($scope.organization_total_list['All'] == null ? 0 : $scope.organization_total_list['All']) + v.total_organizations
             });
         });
 
@@ -132,7 +133,18 @@ gisApp.controller("firstController", function ($scope, $http, uiGmapGoogleMapApi
 
                 $scope.poly_lists[index].push(obj)
             });
+            $loading.finish('body');
         });
+
+        //$http.get('src/js/IDN_adm_1_province.json').then(function (data) {
+        //	console.log(data.data.features);
+        //	$scope.polys = data.data.features;
+        //});
+
+        //$http.get('src/js/provinsi.json').then(function (data) {
+        //	console.log(data.data.features);
+        //	$scope.polys = data.data.features;
+        //});
 
         $scope.options = {
             language: "in",
