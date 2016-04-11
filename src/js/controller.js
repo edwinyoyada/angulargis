@@ -1,4 +1,4 @@
-gisApp.controller("firstController", function ($scope, $http, uiGmapGoogleMapApi, Organization, OrganizationTotal, OrganizationType, GeneralOrganization, Provinces, Cities, AllCities, Type, ConventionalType, AreaSummary) {
+gisApp.controller("firstController", function ($scope, $http, uiGmapGoogleMapApi, Organization, OrganizationTotal, OrganizationType, GeneralOrganization, Provinces, Cities, AllCities, Type, ConventionalType, AreaSummary,$loading) {
     // Do stuff with your $scope.
     // Note: Some of the directives require at least something to be defined originally!
     // e.g. $scope.markers = []
@@ -6,8 +6,7 @@ gisApp.controller("firstController", function ($scope, $http, uiGmapGoogleMapApi
     // uiGmapGoogleMapApi is a promise.
     // The "then" callback function provides the google.maps object.
 
-    $loading.start('body');
-    $scope.PolygonVisible = true;
+    $scope.PolygonVisible = false;
 
     $scope.filter = {
         city: {
@@ -85,6 +84,69 @@ gisApp.controller("firstController", function ($scope, $http, uiGmapGoogleMapApi
     //    }
     //}
 
+    $scope.showDemographyClick= function($event){
+        var checkbox = $event.target;
+        $loading.start('body');
+        if (checkbox.checked && $scope.poly_lists.length==0){
+            $http.get('src/js/IDN_adm2.json').then(function (data) {
+                console.log(data);
+                //IDN_adm_1_province.json
+                //id-all.geo.json
+                //IDN_adm_2_kabkota.json
+                //data.data.features.forEach(function (obj, k) {
+                //    obj.id = k;
+                //    if (k % 2 == 0) {
+                //        obj.fill = {color: 'red', opacity: '0.3'};
+                //    } else if (k % 3 == 0) {
+                //        obj.fill = {color: 'green', opacity: '0.3'};
+                //    } else if (k % 5 == 0) {
+                //        obj.fill = {color: 'yellow', opacity: '0.3'};
+                //    } else {
+                //        obj.fill = {color: 'blue', opacity: '0.3'};
+                //    }
+                //    obj.stroke = {color: 'white', weight: 1, opacity: '1.0'};
+                //});
+                //$scope.polys = data.data.features;
+                index = 0;
+                $scope.poly_lists[index]=[];
+                data.data.features.forEach(function (obj, k) {
+                    if(k%5==0)
+                    {
+                        index++;
+                        $scope.poly_lists[index]=[];
+                    }
+                    obj.id = k;
+                    if (k % 2 == 0) {
+                        obj.fill = {color: 'red', opacity: '0.3'};
+                    } else if (k % 3 == 0) {
+                        obj.fill = {color: 'green', opacity: '0.3'};
+                    } else if (k % 5 == 0) {
+                        obj.fill = {color: 'yellow', opacity: '0.3'};
+                    } else {
+                        obj.fill = {color: 'blue', opacity: '0.3'};
+                    }
+                    obj.stroke = {color: 'white', weight: 1, opacity: '1.0'};
+
+                    $scope.poly_lists[index].push(obj)
+                });
+                $loading.finish('body');
+            });
+
+            //$http.get('src/js/IDN_adm_1_province.json').then(function (data) {
+            //	console.log(data.data.features);
+            //	$scope.polys = data.data.features;
+            //});
+
+            //$http.get('src/js/provinsi.json').then(function (data) {
+            //	console.log(data.data.features);
+            //	$scope.polys = data.data.features;
+            //});
+        }else{
+            $loading.finish('body');
+        }
+        $scope.PolygonVisible = checkbox.checked;
+    }
+
     uiGmapGoogleMapApi.then(function (maps) {
         $scope.poly_lists = [];
 
@@ -93,58 +155,6 @@ gisApp.controller("firstController", function ($scope, $http, uiGmapGoogleMapApi
             center: {latitude: -2.3163654, longitude: 119.0851044},
             zoom: 6
         };
-
-        $scope.polys = [];
-
-        $http.get('src/js/IDN_adm_2_kabkota.json').then(function (data) {
-            //data.data.features.forEach(function (obj, k) {
-            //    obj.id = k;
-            //    if (k % 2 == 0) {
-            //        obj.fill = {color: 'red', opacity: '0.3'};
-            //    } else if (k % 3 == 0) {
-            //        obj.fill = {color: 'green', opacity: '0.3'};
-            //    } else if (k % 5 == 0) {
-            //        obj.fill = {color: 'yellow', opacity: '0.3'};
-            //    } else {
-            //        obj.fill = {color: 'blue', opacity: '0.3'};
-            //    }
-            //    obj.stroke = {color: 'white', weight: 1, opacity: '1.0'};
-            //});
-            //$scope.polys = data.data.features;
-            index = 0;
-            $scope.poly_lists[index]=[];
-            data.data.features.forEach(function (obj, k) {
-                if(k%5==0)
-                {
-                    index++;
-                    $scope.poly_lists[index]=[];
-                }
-                obj.id = k;
-                if (k % 2 == 0) {
-                    obj.fill = {color: 'red', opacity: '0.3'};
-                } else if (k % 3 == 0) {
-                    obj.fill = {color: 'green', opacity: '0.3'};
-                } else if (k % 5 == 0) {
-                    obj.fill = {color: 'yellow', opacity: '0.3'};
-                } else {
-                    obj.fill = {color: 'blue', opacity: '0.3'};
-                }
-                obj.stroke = {color: 'white', weight: 1, opacity: '1.0'};
-
-                $scope.poly_lists[index].push(obj)
-            });
-            $loading.finish('body');
-        });
-
-        //$http.get('src/js/IDN_adm_1_province.json').then(function (data) {
-        //	console.log(data.data.features);
-        //	$scope.polys = data.data.features;
-        //});
-
-        //$http.get('src/js/provinsi.json').then(function (data) {
-        //	console.log(data.data.features);
-        //	$scope.polys = data.data.features;
-        //});
 
         $scope.options = {
             language: "in",
@@ -287,8 +297,8 @@ gisApp.controller("firstController", function ($scope, $http, uiGmapGoogleMapApi
             if (lastModel != null) {
                 lastModel.show = false;
             }
-            lastModel = model;
 
+            lastModel = model;
         };
 
         $scope.filterCheckboxOrganizationClick = function filterCheckboxOrganizationClick($event, id) {
@@ -342,7 +352,7 @@ gisApp.controller("firstController", function ($scope, $http, uiGmapGoogleMapApi
                     hqModel.phone = phone;
                 }
 
-                $scope.map.center = {latitude: hqModel.coord.latitude, longitude: hqModel.coord.longitude}
+                $scope.map.center = {latitude:hqModel.coord.latitude, longitude: hqModel.coord.longitude}
 
                 lastModel.show = false;
                 hqModel.show = true;

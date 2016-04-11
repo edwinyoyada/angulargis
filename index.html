@@ -89,7 +89,7 @@
         }
 
         .right-menu-container-show {
-            height: calc(100% - 168px);
+            height: calc(100% - 288px);
         }
 
         .select-dropdown {
@@ -185,9 +185,7 @@
                                 <!--<option value="0" disabled selected>Choose Conventional</option>-->
                                 <optgroup label="Choose Conventional Type">
                                     <option value="All">All</option>
-                                    <option ng-cloak value="{{ obj._id }}" ng-repeat="obj in conventional_type_list">
-                                        {{obj.name}}
-                                    </option>
+                                    <option ng-cloak value="{{ obj._id }}" ng-repeat="obj in conventional_type_list">{{obj.name}}</option>
                                 </optgroup>
                             </select>
                             <label style="top: -8px;left:0px;">Choose Conventional Type</label>
@@ -212,7 +210,7 @@
                      ng-show="IsFilterShow">
                     <ul class="collection" style="margin:0px;">
                         <li class="collection-item">
-                            <input type="checkbox" ng-click="PolygonVisible=!PolygonVisible"
+                            <input type="checkbox" ng-click="showDemographyClick($event)"
                                    id="checkbox-polygonShow" ng-checked="PolygonVisible">
                             <label for="checkbox-polygonShow" ng-cloak>Show Demography</label>
                         </li>
@@ -315,7 +313,7 @@
         <ui-gmap-polygons models="obj" path='"geometry"'
                           fill='"fill"'
                           stroke="'stroke'" visible="PolygonVisible" geodesic="true" fit="false"
-                          editable="false" static="true" ng-cloak="" events="polygons_events">
+                          editable="false" static="true" ng-cloak="">
 
         </ui-gmap-polygons>
     </div>
