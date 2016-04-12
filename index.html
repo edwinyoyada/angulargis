@@ -167,8 +167,7 @@
                     </div>
                     <div class="col s2" style="padding-left:0px;">
                         <div class="input-field" style="margin:0px;">
-                            <select style="margin:0px;" material-select watch ng-model="filter.type"
-                                    ng-change="ddlType_change()">
+                            <select style="margin:0px;" material-select watch ng-model="filter.type">
                                 <!--<option value="0" disabled selected>Choose Type</option>-->
                                 <optgroup label="Choose Type">
                                     <option value="All">All</option>
@@ -190,6 +189,10 @@
                             </select>
                             <label style="top: -8px;left:0px;">Choose Conventional Type</label>
                         </div>
+                    </div>
+                    <div class="col s2" style="text-align: right">
+                        <button class="btn waves-effect waves-light" ng-click="loadSearch()" name="action">Search<i class="material-icons right">search</i>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -264,10 +267,10 @@
                      ng-show="IsSummaryShow">
                     <ul class="collection" style="margin:0px;">
                         <li class="collection-item" ng-cloak>
-                            <b>Province</b> : {{filter.province.name}}
+                            <b>Province</b> : {{activeFilter.province.name}}
                         </li>
                         <li class="collection-item" ng-cloak>
-                            <b>City</b> : {{filter.city.name}}
+                            <b>City</b> : {{activeFilter.city.name}}
                         </li>
                         <li class="collection-item" ng-cloak>
                             <b>Number of Organizations</b> :

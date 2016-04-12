@@ -23,6 +23,8 @@ gisApp.controller("firstController", function ($scope, $http, uiGmapGoogleMapApi
         is_hq_only: false
     }
 
+    $scope.activeFilter = angular.copy($scope.filter);
+
     $scope.summary = {}
     $scope.organization_total_list = {}
 
@@ -40,8 +42,8 @@ gisApp.controller("firstController", function ($scope, $http, uiGmapGoogleMapApi
 
     $scope.updateAreaSumary = function () {
         AreaSummary.query({
-            province: $scope.filter.province.id,
-            city: $scope.filter.city.id,
+            province: $scope.activeFilter.province.id,
+            city: $scope.activeFilter.city.id,
             organization_type_id: $scope.organization_type
         }, function (obj) {
             $scope.summary = obj[0];
@@ -50,19 +52,19 @@ gisApp.controller("firstController", function ($scope, $http, uiGmapGoogleMapApi
 
     $scope.updateOrganizationTotal = function () {
         $scope.organization_total_list = {};
+        $scope.organization_total_list['All'] = 0;
         OrganizationTotal.query({
             organization_type_id: $scope.organization_type,
-            province: $scope.filter.province.id,
-            city: $scope.filter.city.id,
-            type: $scope.filter.type,
-            sub_type: $scope.filter.sub_type,
-            conventional: $scope.filter.conventional_type,
-            is_hq_only: $scope.filter.is_hq_only
+            province: $scope.activeFilter.province.id,
+            city: $scope.activeFilter.city.id,
+            type: $scope.activeFilter.type,
+            sub_type: $scope.activeFilter.sub_type,
+            conventional: $scope.activeFilter.conventional_type,
+            is_hq_only: $scope.activeFilter.is_hq_only
         }, function (obj) {
-            $scope.organization_total_list['All'] = 0;
             obj.forEach(function (v) {
                 $scope.organization_total_list[v._id] = v.total_organizations;
-                $scope.organization_total_list['All'] = ($scope.organization_total_list['All'] == null ? 0 : $scope.organization_total_list['All']) + v.total_organizations
+                $scope.organization_total_list['All'] = $scope.organization_total_list['All'] + v.total_organizations
             });
         });
 
@@ -89,24 +91,6 @@ gisApp.controller("firstController", function ($scope, $http, uiGmapGoogleMapApi
         $loading.start('body');
         if (checkbox.checked && $scope.poly_lists.length==0){
             $http.get('src/js/IDN_adm2.json').then(function (data) {
-                console.log(data);
-                //IDN_adm_1_province.json
-                //id-all.geo.json
-                //IDN_adm_2_kabkota.json
-                //data.data.features.forEach(function (obj, k) {
-                //    obj.id = k;
-                //    if (k % 2 == 0) {
-                //        obj.fill = {color: 'red', opacity: '0.3'};
-                //    } else if (k % 3 == 0) {
-                //        obj.fill = {color: 'green', opacity: '0.3'};
-                //    } else if (k % 5 == 0) {
-                //        obj.fill = {color: 'yellow', opacity: '0.3'};
-                //    } else {
-                //        obj.fill = {color: 'blue', opacity: '0.3'};
-                //    }
-                //    obj.stroke = {color: 'white', weight: 1, opacity: '1.0'};
-                //});
-                //$scope.polys = data.data.features;
                 index = 0;
                 $scope.poly_lists[index]=[];
                 data.data.features.forEach(function (obj, k) {
@@ -131,16 +115,6 @@ gisApp.controller("firstController", function ($scope, $http, uiGmapGoogleMapApi
                 });
                 $loading.finish('body');
             });
-
-            //$http.get('src/js/IDN_adm_1_province.json').then(function (data) {
-            //	console.log(data.data.features);
-            //	$scope.polys = data.data.features;
-            //});
-
-            //$http.get('src/js/provinsi.json').then(function (data) {
-            //	console.log(data.data.features);
-            //	$scope.polys = data.data.features;
-            //});
         }else{
             $loading.finish('body');
         }
@@ -181,7 +155,6 @@ gisApp.controller("firstController", function ($scope, $http, uiGmapGoogleMapApi
 
         $scope.type_list = Type.query(function (data) {
             $scope.filter.type = "All";
-            $scope.ddlType_change();
         });
 
         $scope.conventional_type_list = ConventionalType.query(function (data) {
@@ -216,48 +189,29 @@ gisApp.controller("firstController", function ($scope, $http, uiGmapGoogleMapApi
             $scope.filter.city.name = $('#ddlCity option:selected').text();
         };
 
-        $scope.ddlType_change = function () {
-            $scope.sub_type_list = [];
-            if ($scope.filter.type != "All") {
-                var selected_type = $scope.type_list.filter(function (obj) {
-                    return (obj._id == $scope.filter.type);
-                })[0];
-
-                if (selected_type != null) {
-                    $scope.sub_type_list = selected_type.sub_type;
-                }
-            } else {
-                if ($scope.type_list != null) {
-                    $scope.sub_type_list = [];
-                    $scope.type_list.forEach(function (obj) {
-                        if (obj.sub_type != null) {
-                            $scope.sub_type_list = $scope.sub_type_list.concat(obj.sub_type);
-                        }
-                    });
-                }
-            }
-            $scope.sub_type_list.sort(function (a, b) {
-                return (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0);
-            });
-
-            $scope.filter.sub_type = "All";
-        };
-
         $scope.marker = [];
 
         $scope.loadMapData = function () {
+            $loading.start('body');
             var searchKeyword = "";
             var markers = Organization.query({
                 general_ids: ($scope.filter_organization.length == 0 ? 'null' : $scope.filter_organization),
-                province: $scope.filter.province.id,
-                city: $scope.filter.city.id,
-                type: $scope.filter.type,
-                sub_type: $scope.filter.sub_type,
-                conventional: $scope.filter.conventional_type,
-                is_hq_only: $scope.filter.is_hq_only
+                province: $scope.activeFilter.province.id,
+                city: $scope.activeFilter.city.id,
+                type: $scope.activeFilter.type,
+                sub_type: $scope.activeFilter.sub_type,
+                conventional: $scope.activeFilter.conventional_type,
+                is_hq_only: $scope.activeFilter.is_hq_only
+            },function (data) {
+                $loading.finish('body');
             });
-            //var markers = Organization.query();
             $scope.marker = markers;
+        }
+
+        $scope.loadSearch = function () {
+            $scope.activeFilter=angular.copy($scope.filter);
+            $scope.updateAreaSumary();
+            $scope.updateOrganizationTotal();
         }
 
         $scope.organizationTypeClick = function (id) {
@@ -270,13 +224,12 @@ gisApp.controller("firstController", function ($scope, $http, uiGmapGoogleMapApi
             $scope.filter.conventional_type = "All";
             $scope.filter.is_hq_only = false;
             $scope.city_list = [];
-            //$scope.sub_type_list=[];
-            $scope.ddlType_change();
 
             $scope.organization_type = id;
             $scope.filter_organization = [];
             $scope.marker = [];
             $scope.general_organization_name_list = GeneralOrganization.query({organizationTypeID: id});
+            $scope.loadSearch();
         };
 
 
