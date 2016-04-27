@@ -24,9 +24,13 @@ gisApp.controller("firstController", function ($scope, $http, uiGmapGoogleMapApi
     }
 
     $scope.activeFilter = angular.copy($scope.filter);
+    $scope.summary = {};
+    $scope.organization_total_list = {};
 
-    $scope.summary = {}
-    $scope.organization_total_list = {}
+    $scope.general_organization_name_list = [];
+    $scope.filter_organization = [];
+    $scope.IsFilterShow = true;
+    $scope.IsSummaryShow = true;
 
     var lastModel = null;
     var allCities = null;
@@ -34,10 +38,14 @@ gisApp.controller("firstController", function ($scope, $http, uiGmapGoogleMapApi
     var updateSelected = function (checked, id) {
         if (checked && $scope.filter_organization.indexOf(id) === -1) {
             $scope.filter_organization.push(id);
+            return 1;
         }
         if (!checked && $scope.filter_organization.indexOf(id) !== -1) {
             $scope.filter_organization.splice($scope.filter_organization.indexOf(id), 1);
+            return 2;
         }
+
+        return 0;
     };
 
     $scope.updateAreaSumary = function () {
@@ -116,6 +124,7 @@ gisApp.controller("firstController", function ($scope, $http, uiGmapGoogleMapApi
                 $loading.finish('body');
             });
         }else{
+            $scope.poly_lists=[];
             $loading.finish('body');
         }
         $scope.PolygonVisible = checkbox.checked;
@@ -138,10 +147,6 @@ gisApp.controller("firstController", function ($scope, $http, uiGmapGoogleMapApi
             }
         };
 
-        $scope.general_organization_name_list = [];
-        $scope.filter_organization = [];
-        $scope.IsFilterShow = true;
-        $scope.IsSummaryShow = true;
         $scope.organization_type_list = OrganizationType.query(function (data) {
             $scope.organization_type = $scope.organization_type_list[0]._id;
             $scope.general_organization_name_list = GeneralOrganization.query({organizationTypeID: $scope.organization_type});
@@ -193,8 +198,7 @@ gisApp.controller("firstController", function ($scope, $http, uiGmapGoogleMapApi
 
         $scope.loadMapData = function () {
             $loading.start('body');
-            var searchKeyword = "";
-            var markers = Organization.query({
+            Organization.query({
                 general_ids: ($scope.filter_organization.length == 0 ? 'null' : $scope.filter_organization),
                 province: $scope.activeFilter.province.id,
                 city: $scope.activeFilter.city.id,
@@ -204,12 +208,29 @@ gisApp.controller("firstController", function ($scope, $http, uiGmapGoogleMapApi
                 is_hq_only: $scope.activeFilter.is_hq_only
             },function (data) {
                 $loading.finish('body');
+                $scope.marker = data;
             });
-            $scope.marker = markers;
+        }
+
+        $scope.appendMapDataByID = function (ids) {
+            $loading.start('body');
+            Organization.query({
+                general_ids: (ids.length == 0 ? 'null' : ids),
+                province: $scope.activeFilter.province.id,
+                city: $scope.activeFilter.city.id,
+                type: $scope.activeFilter.type,
+                sub_type: $scope.activeFilter.sub_type,
+                conventional: $scope.activeFilter.conventional_type,
+                is_hq_only: $scope.activeFilter.is_hq_only
+            },function (data) {
+                $scope.marker =$scope.marker.concat(data);
+                $loading.finish('body');
+            });
         }
 
         $scope.loadSearch = function () {
             $scope.activeFilter=angular.copy($scope.filter);
+            $scope.loadMapData();
             $scope.updateAreaSumary();
             $scope.updateOrganizationTotal();
         }
@@ -257,6 +278,14 @@ gisApp.controller("firstController", function ($scope, $http, uiGmapGoogleMapApi
         $scope.filterCheckboxOrganizationClick = function filterCheckboxOrganizationClick($event, id) {
             var checkbox = $event.target;
             updateSelected(checkbox.checked, id);
+            if(checkbox.checked)
+            {
+                $scope.appendMapDataByID(id);
+            }else{
+                $scope.marker =$scope.marker.filter(function(data){
+                    return data.general_organization_id._id!=id;
+                });
+            }
         };
 
         $scope.isSelectedAll = function () {
@@ -268,10 +297,21 @@ gisApp.controller("firstController", function ($scope, $http, uiGmapGoogleMapApi
 
         $scope.selectAll = function ($event) {
             var checkbox = $event.target;
-            $scope.general_organization_name_list.$promise.then(function (data) {
+            var temp_filter_organization = [];
+            $scope.general_organization_name_list.$promise.then(function(data) {
                 data.forEach(function (obj) {
-                    updateSelected(checkbox.checked, obj._id);
+                    if(updateSelected(checkbox.checked, obj._id)==1)
+                    {
+                        temp_filter_organization.push(obj._id);
+                    }
                 });
+
+                if(checkbox.checked)
+                {
+                    $scope.appendMapDataByID(temp_filter_organization);
+                }else{
+                    $scope.marker = [];
+                }
             });
         };
 

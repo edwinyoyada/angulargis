@@ -65,7 +65,8 @@
         }
 
         .left-main-content-show {
-            height: calc(100% - 125px);
+            /*height: calc(100% - 125px);*/
+            height: calc(100% - 80px);
             overflow-y: auto;
             padding: 0px;
             padding: 0 !important;
@@ -161,8 +162,7 @@
                         </div>
                     </div>
                     <div class="col s2" style="padding-left:0px;padding-top:12px;">
-                        <input type="checkbox" id="cbxHeadQuarterOnly" ng-model="filter.is_hq_only"
-                               ng-click="updateOrganizationTotal()">
+                        <input type="checkbox" id="cbxHeadQuarterOnly" ng-model="filter.is_hq_only">
                         <label for="cbxHeadQuarterOnly" style="color:rgba(0, 0, 0, 0.87)">Headquarter Only</label>
                     </div>
                     <div class="col s2" style="padding-left:0px;">
@@ -208,6 +208,8 @@
                             Show
                         </label>
                     </div>
+                    <button style="display:none;" ng-click="openHqWindow()" id="btnGoToHqLocation">
+                    </button>
                 </div>
                 <div class="card-content style-3" ng-class="{'left-main-content-show':IsFilterShow}"
                      ng-show="IsFilterShow">
@@ -236,14 +238,12 @@
                         </li>
                     </ul>
                 </div>
-                <div class="card-action" style="text-align: right;padding-top: 11px;" ng-show="IsFilterShow">
-                    <button class="btn waves-effect waves-light" ng-click="loadMapData()" name="action">Load Map Data
-                        <i class="material-icons right">search</i>
-                    </button>
-                    <button style="display:none;" ng-click="openHqWindow()" id="btnGoToHqLocation">
-                    </button>
+                <!--<div class="card-action" style="text-align: right;padding-top: 11px;" ng-show="IsFilterShow">-->
+                    <!--<button class="btn waves-effect waves-light" ng-click="loadMapData()" name="action">Load Map Data-->
+                        <!--<i class="material-icons right">search</i>-->
+                    <!--</button>-->
 
-                </div>
+                <!--</div>-->
             </div>
 
             <div style="margin:0px;" class="right-menu-container card "
