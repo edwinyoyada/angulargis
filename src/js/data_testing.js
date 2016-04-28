@@ -1,3 +1,129 @@
+ //var organizationNameData = [
+ //    {
+ //        "_id" : ObjectId("5700a830ef2e2fd4201a7091"),
+ //        "name" : "Asuransi Adira Dinamika",
+ //        "organization_type_id" : ObjectId("56fcd7d2cc5d96d7e29250a4"),
+ //        "type_id" : ObjectId("56fcc7e372797c2e270d2088"),
+ //        "conventional_type_id" : ObjectId("56fcdb45cc5d96d7e29250a5")
+ //    }
+ //    {
+ //        "_id" : ObjectId("5700a830ef2e2fd4201a7094"),
+ //        "name" : "Asuransi Allianz",
+ //        "organization_type_id" : ObjectId("56fcd7d2cc5d96d7e29250a4"),
+ //        "type_id" : ObjectId("56fcc7e372797c2e270d2088"),
+ //        "conventional_type_id" : ObjectId("56fcdb45cc5d96d7e29250a5")
+ //    }
+ //    {
+ //        "name" : "Asuransi Jasa Indonesia",
+ //        "organization_type_id" : ObjectId("56fcd7d2cc5d96d7e29250a4"),
+ //        "type_id" : ObjectId("56fcc7e372797c2e270d2088"),
+ //        "conventional_type_id" : ObjectId("56fcdb45cc5d96d7e29250a5")
+ //    }
+ //    {
+ //        "name" : "Asuransi Central Asia",
+ //        "organization_type_id" : ObjectId("56fcd7d2cc5d96d7e29250a4"),
+ //        "type_id" : ObjectId("56fcc7e372797c2e270d2088"),
+ //        "conventional_type_id" : ObjectId("56fcdb45cc5d96d7e29250a5")
+ //    }
+ //    {
+ //        "name" : "Asuransi Wahana Tata",
+ //        "organization_type_id" : ObjectId("56fcd7d2cc5d96d7e29250a4"),
+ //        "type_id" : ObjectId("56fcc7e372797c2e270d2088"),
+ //        "conventional_type_id" : ObjectId("56fcdb45cc5d96d7e29250a5")
+ //    }
+ //    {
+ //        "name" : "Asuransi Astra Life",
+ //        "organization_type_id" : ObjectId("56fcd7d2cc5d96d7e29250a4"),
+ //        "type_id" : ObjectId("56fcc7e372797c2e270d2088"),
+ //        "conventional_type_id" : ObjectId("56fcdb45cc5d96d7e29250a5")
+ //    }
+ //    {
+ //        "name" : "Asuransi Sinarmas",
+ //        "organization_type_id" : ObjectId("56fcd7d2cc5d96d7e29250a4"),
+ //        "type_id" : ObjectId("56fcc7e372797c2e270d2088"),
+ //        "conventional_type_id" : ObjectId("56fcdb45cc5d96d7e29250a5")
+ //    }
+ //    {
+ //        "name" : "Bank Mandiri",
+ //        "organization_type_id" : ObjectId("56fcd7d2cc5d96d7e29250a3"),
+ //        "type_id" : ObjectId("56fcc7e372797c2e270d2088"),
+ //        "conventional_type_id" : ObjectId("56fcdb45cc5d96d7e29250a5")
+ //    }
+ //    {
+ //        "name" : "Bank BRI Agroniaga",
+ //        "organization_type_id" : ObjectId("56fcd7d2cc5d96d7e29250a3"),
+ //        "type_id" : ObjectId("56fcc7e372797c2e270d2088"),
+ //        "conventional_type_id" : ObjectId("56fcdb45cc5d96d7e29250a5")
+ //    }
+ //    {
+ //        "name" : "Bank Negara Indonesia",
+ //        "organization_type_id" : ObjectId("56fcd7d2cc5d96d7e29250a3"),
+ //        "type_id" : ObjectId("56fcc7e372797c2e270d2088"),
+ //        "conventional_type_id" : ObjectId("56fcdb45cc5d96d7e29250a5")
+ //    }
+ //    {
+ //        "name" : "Bank Rakyat Indonesia",
+ //        "organization_type_id" : ObjectId("56fcd7d2cc5d96d7e29250a3"),
+ //        "type_id" : ObjectId("56fcc7e372797c2e270d2088"),
+ //        "conventional_type_id" : ObjectId("56fcdb45cc5d96d7e29250a5")
+ //    }
+ //    {
+ //        "name" : "Bank Tabungan Negara",
+ //        "organization_type_id" : ObjectId("56fcd7d2cc5d96d7e29250a3"),
+ //        "type_id" : ObjectId("56fcc7e372797c2e270d2088"),
+ //        "conventional_type_id" : ObjectId("56fcdb45cc5d96d7e29250a5")
+ //    }
+ //    {
+ //        "name" : "Bank Bukopin",
+ //        "organization_type_id" : ObjectId("56fcd7d2cc5d96d7e29250a3"),
+ //        "type_id" : ObjectId("56fcc7e372797c2e270d2088"),
+ //        "conventional_type_id" : ObjectId("56fcdb45cc5d96d7e29250a5")
+ //    }
+ //    {
+ //        "name" : "Bank Bumi Arta",
+ //        "organization_type_id" : ObjectId("56fcd7d2cc5d96d7e29250a3"),
+ //        "type_id" : ObjectId("56fcc7e372797c2e270d2088"),
+ //        "conventional_type_id" : ObjectId("56fcdb45cc5d96d7e29250a5")
+ //    }
+ //    {
+ //        "name" : "Bank Woori Saudara",
+ //        "organization_type_id" : ObjectId("56fcd7d2cc5d96d7e29250a3"),
+ //        "type_id" : ObjectId("56fcc7e372797c2e270d2088"),
+ //        "conventional_type_id" : ObjectId("56fcdb45cc5d96d7e29250a5")
+ //    }
+ //    {
+ //        "name" : "Bank Multi Arta Sentosa",
+ //        "organization_type_id" : ObjectId("56fcd7d2cc5d96d7e29250a3"),
+ //        "type_id" : ObjectId("56fcc7e372797c2e270d2088"),
+ //        "conventional_type_id" : ObjectId("56fcdb45cc5d96d7e29250a5")
+ //    }
+ //    {
+ //        "name" : "Bank DKI",
+ //        "organization_type_id" : ObjectId("56fcd7d2cc5d96d7e29250a3"),
+ //        "type_id" : ObjectId("56fcc7e372797c2e270d2088"),
+ //        "conventional_type_id" : ObjectId("56fcdb45cc5d96d7e29250a5")
+ //    }
+ //    {
+ //        "name" : "Bank Commonwealth",
+ //        "organization_type_id" : ObjectId("56fcd7d2cc5d96d7e29250a3"),
+ //        "type_id" : ObjectId("56fcc7e372797c2e270d2088"),
+ //        "conventional_type_id" : ObjectId("56fcdb45cc5d96d7e29250a5")
+ //    }
+ //    {
+ //        "name" : "Bank Mizuho Indonesia",
+ //        "organization_type_id" : ObjectId("56fcd7d2cc5d96d7e29250a3"),
+ //        "type_id" : ObjectId("56fcc7e372797c2e270d2088"),
+ //        "conventional_type_id" : ObjectId("56fcdb45cc5d96d7e29250a5")
+ //    }
+ //    {
+ //        "name" : "Bangkok Bank",
+ //        "organization_type_id" : ObjectId("56fcd7d2cc5d96d7e29250a3"),
+ //        "type_id" : ObjectId("56fcc7e372797c2e270d2088"),
+ //        "conventional_type_id" : ObjectId("56fcdb45cc5d96d7e29250a5")
+ //    }
+ //]
+
+
 //var adiraData = [
 //{
 //    "_id" : ObjectId("56fde19acc5d96d7e29250a7"),
@@ -966,7 +1092,7 @@
 //    "marker_image" : "src/image/icon/insurance.png"
 //}
 //]
-
+//
 //var allianzData = [
 //{
 //    "_id" : ObjectId("5702a83a711f2e5e418af3cb"),
@@ -984,6 +1110,9 @@
 //        "latitude" : -6.209769,
 //        "longitude" : 106.831354
 //    },
+//    "asset_size" : 0,
+//    "sales_size" : 0,
+//    "third_party_funds" : 0,
 //    "is_hq" : "yes",
 //    "website" : "http://www.allianz.co.id",
 //    "general_organization_id" : ObjectId("5700a830ef2e2fd4201a7094"),
@@ -1018,6 +1147,9 @@
 //        "latitude" : -0.038176,
 //        "longitude" : 109.336462
 //    },
+//    "asset_size" : 0,
+//    "sales_size" : 0,
+//    "third_party_funds" : 0,
 //    "is_hq" : "no",
 //    "website" : "http://www.allianz.co.id",
 //    "hq_id" : ObjectId("5702a83a711f2e5e418af3cb"),
@@ -1054,6 +1186,9 @@
 //        "latitude" :  0.1588004,
 //        "longitude" : 117.475516
 //    },
+//    "asset_size" : 0,
+//    "sales_size" : 0,
+//    "third_party_funds" : 0,
 //    "is_hq" : "no",
 //    "website" : "http://www.allianz.co.id",
 //    "hq_id" : ObjectId("5702a83a711f2e5e418af3cb"),
@@ -1090,6 +1225,9 @@
 //        "longitude" : 117.109492
 //    },
 //    "is_hq" : "no",
+//    "asset_size" : 0,
+//    "sales_size" : 0,
+//    "third_party_funds" : 0,
 //    "website" : "http://www.allianz.co.id",
 //    "hq_id" : ObjectId("5702a83a711f2e5e418af3cb"),
 //    "general_organization_id" : ObjectId("5700a830ef2e2fd4201a7094"),
@@ -1122,6 +1260,9 @@
 //        "latitude" : 0.3611437,
 //        "longitude" : 117.537472
 //    },
+//    "asset_size" : 0,
+//    "sales_size" : 0,
+//    "third_party_funds" : 0,
 //    "is_hq" : "no",
 //    "website" : "http://www.allianz.co.id",
 //    "hq_id" : ObjectId("5702a83a711f2e5e418af3cb"),
@@ -1150,6 +1291,9 @@
 //        "latitude" : 0.45919,
 //        "longitude" : 101.418056
 //    },
+//    "asset_size" : 0,
+//    "sales_size" : 0,
+//    "third_party_funds" : 0,
 //    "is_hq" : "no",
 //    "website" : "http://www.allianz.co.id",
 //    "hq_id" : ObjectId("5702a83a711f2e5e418af3cb"),
@@ -1187,6 +1331,9 @@
 //        "longitude" : 117.166388
 //    },
 //    "is_hq" : "no",
+//    "asset_size" : 0,
+//    "sales_size" : 0,
+//    "third_party_funds" : 0,
 //    "website" : "http://www.allianz.co.id",
 //    "hq_id" : ObjectId("5702a83a711f2e5e418af3cb"),
 //    "general_organization_id" : ObjectId("5700a830ef2e2fd4201a7094"),
@@ -1220,6 +1367,9 @@
 //        "longitude" : 117.153027
 //    },
 //    "is_hq" : "no",
+//    "asset_size" : 0,
+//    "sales_size" : 0,
+//    "third_party_funds" : 0,
 //    "website" : "http://www.allianz.co.id",
 //    "hq_id" : ObjectId("5702a83a711f2e5e418af3cb"),
 //    "general_organization_id" : ObjectId("5700a830ef2e2fd4201a7094"),
@@ -1255,6 +1405,9 @@
 //        "longitude" : 117.156902
 //    },
 //    "is_hq" : "no",
+//    "asset_size" : 0,
+//    "sales_size" : 0,
+//    "third_party_funds" : 0,
 //    "website" : "http://www.allianz.co.id",
 //    "hq_id" : ObjectId("5702a83a711f2e5e418af3cb"),
 //    "general_organization_id" : ObjectId("5700a830ef2e2fd4201a7094"),
@@ -1291,6 +1444,9 @@
 //        "longitude" : 117.144653
 //    },
 //    "is_hq" : "no",
+//    "asset_size" : 0,
+//    "sales_size" : 0,
+//    "third_party_funds" : 0,
 //    "website" : "http://www.allianz.co.id",
 //    "hq_id" : ObjectId("5702a83a711f2e5e418af3cb"),
 //    "general_organization_id" : ObjectId("5700a830ef2e2fd4201a7094"),
@@ -1327,6 +1483,9 @@
 //        "longitude" : 123.048481
 //    },
 //    "is_hq" : "no",
+//    "asset_size" : 0,
+//    "sales_size" : 0,
+//    "third_party_funds" : 0,
 //    "website" : "http://www.allianz.co.id",
 //    "hq_id" : ObjectId("5702a83a711f2e5e418af3cb"),
 //    "general_organization_id" : ObjectId("5700a830ef2e2fd4201a7094"),
@@ -1363,6 +1522,9 @@
 //        "longitude" : 104.484671
 //    },
 //    "is_hq" : "no",
+//    "asset_size" : 0,
+//    "sales_size" : 0,
+//    "third_party_funds" : 0,
 //    "website" : "http://www.allianz.co.id",
 //    "hq_id" : ObjectId("5702a83a711f2e5e418af3cb"),
 //    "general_organization_id" : ObjectId("5700a830ef2e2fd4201a7094"),
@@ -1399,6 +1561,9 @@
 //        "longitude" : 104.026582
 //    },
 //    "is_hq" : "no",
+//    "asset_size" : 0,
+//    "sales_size" : 0,
+//    "third_party_funds" : 0,
 //    "website" : "http://www.allianz.co.id",
 //    "hq_id" : ObjectId("5702a83a711f2e5e418af3cb"),
 //    "general_organization_id" : ObjectId("5700a830ef2e2fd4201a7094"),
@@ -1435,6 +1600,9 @@
 //        "longitude" : 104.035954
 //    },
 //    "is_hq" : "no",
+//    "asset_size" : 0,
+//    "sales_size" : 0,
+//    "third_party_funds" : 0,
 //    "website" : "http://www.allianz.co.id",
 //    "hq_id" : ObjectId("5702a83a711f2e5e418af3cb"),
 //    "general_organization_id" : ObjectId("5700a830ef2e2fd4201a7094"),
@@ -1471,6 +1639,9 @@
 //        "longitude" : 116.84048
 //    },
 //    "is_hq" : "no",
+//    "asset_size" : 0,
+//    "sales_size" : 0,
+//    "third_party_funds" : 0,
 //    "website" : "http://www.allianz.co.id",
 //    "hq_id" : ObjectId("5702a83a711f2e5e418af3cb"),
 //    "general_organization_id" : ObjectId("5700a830ef2e2fd4201a7094"),
@@ -1507,6 +1678,9 @@
 //        "longitude" : 124.838631
 //    },
 //    "is_hq" : "no",
+//    "asset_size" : 0,
+//    "sales_size" : 0,
+//    "third_party_funds" : 0,
 //    "website" : "http://www.allianz.co.id",
 //    "hq_id" : ObjectId("5702a83a711f2e5e418af3cb"),
 //    "general_organization_id" : ObjectId("5700a830ef2e2fd4201a7094"),
@@ -1542,6 +1716,9 @@
 //        "longitude" : 123.612108
 //    },
 //    "is_hq" : "no",
+//    "asset_size" : 0,
+//    "sales_size" : 0,
+//    "third_party_funds" : 0,
 //    "website" : "http://www.allianz.co.id",
 //    "hq_id" : ObjectId("5702a83a711f2e5e418af3cb"),
 //    "general_organization_id" : ObjectId("5700a830ef2e2fd4201a7094"),
@@ -1575,6 +1752,9 @@
 //        "longitude" : 117.497296
 //    },
 //    "is_hq" : "no",
+//    "asset_size" : 0,
+//    "sales_size" : 0,
+//    "third_party_funds" : 0,
 //    "website" : "http://www.allianz.co.id",
 //    "hq_id" : ObjectId("5702a83a711f2e5e418af3cb"),
 //    "general_organization_id" : ObjectId("5700a830ef2e2fd4201a7094"),
@@ -1608,6 +1788,9 @@
 //        longitude: 106.116183
 //    },
 //    "is_hq" : "no",
+//    "asset_size" : 0,
+//    "sales_size" : 0,
+//    "third_party_funds" : 0,
 //    "website" : "http://www.allianz.co.id",
 //    "hq_id" : ObjectId("5702a83a711f2e5e418af3cb"),
 //    "general_organization_id" : ObjectId("5700a830ef2e2fd4201a7094"),
@@ -1644,6 +1827,9 @@
 //        "longitude" : 117.633513
 //    },
 //    "is_hq" : "no",
+//    "asset_size" : 0,
+//    "sales_size" : 0,
+//    "third_party_funds" : 0,
 //    "website" : "http://www.allianz.co.id",
 //    "hq_id" : ObjectId("5702a83a711f2e5e418af3cb"),
 //    "general_organization_id" : ObjectId("5700a830ef2e2fd4201a7094"),
@@ -1680,6 +1866,9 @@
 //        "longitude" : 114.59919
 //    },
 //    "is_hq" : "no",
+//    "asset_size" : 0,
+//    "sales_size" : 0,
+//    "third_party_funds" : 0,
 //    "website" : "http://www.allianz.co.id",
 //    "hq_id" : ObjectId("5702a83a711f2e5e418af3cb"),
 //    "general_organization_id" : ObjectId("5700a830ef2e2fd4201a7094"),
@@ -1715,6 +1904,9 @@
 //        "longitude" : 114.591766
 //    },
 //    "is_hq" : "no",
+//    "asset_size" : 0,
+//    "sales_size" : 0,
+//    "third_party_funds" : 0,
 //    "website" : "http://www.allianz.co.id",
 //    "hq_id" : ObjectId("5702a83a711f2e5e418af3cb"),
 //    "general_organization_id" : ObjectId("5700a830ef2e2fd4201a7094"),
@@ -1751,6 +1943,9 @@
 //        "longitude" : 98.6725
 //    },
 //    "is_hq" : "no",
+//    "asset_size" : 0,
+//    "sales_size" : 0,
+//    "third_party_funds" : 0,
 //    "website" : "http://www.allianz.co.id",
 //    "hq_id" : ObjectId("5702a83a711f2e5e418af3cb"),
 //    "general_organization_id" : ObjectId("5700a830ef2e2fd4201a7094"),
@@ -1787,6 +1982,9 @@
 //        "longitude" : 98.663218
 //    },
 //    "is_hq" : "no",
+//    "asset_size" : 0,
+//    "sales_size" : 0,
+//    "third_party_funds" : 0,
 //    "website" : "http://www.allianz.co.id",
 //    "hq_id" : ObjectId("5702a83a711f2e5e418af3cb"),
 //    "general_organization_id" : ObjectId("5700a830ef2e2fd4201a7094"),
@@ -1823,6 +2021,9 @@
 //        "longitude" : 98.683976
 //    },
 //    "is_hq" : "no",
+//    "asset_size" : 0,
+//    "sales_size" : 0,
+//    "third_party_funds" : 0,
 //    "website" : "http://www.allianz.co.id",
 //    "hq_id" : ObjectId("5702a83a711f2e5e418af3cb"),
 //    "general_organization_id" : ObjectId("5700a830ef2e2fd4201a7094"),
@@ -1858,6 +2059,9 @@
 //        "longitude" : 128.167684
 //    },
 //    "is_hq" : "no",
+//    "asset_size" : 0,
+//    "sales_size" : 0,
+//    "third_party_funds" : 0,
 //    "website" : "http://www.allianz.co.id",
 //    "hq_id" : ObjectId("5702a83a711f2e5e418af3cb"),
 //    "general_organization_id" : ObjectId("5700a830ef2e2fd4201a7094"),
@@ -1894,6 +2098,9 @@
 //        "longitude" : 105.262221
 //    },
 //    "is_hq" : "no",
+//    "asset_size" : 0,
+//    "sales_size" : 0,
+//    "third_party_funds" : 0,
 //    "website" : "http://www.allianz.co.id",
 //    "hq_id" : ObjectId("5702a83a711f2e5e418af3cb"),
 //    "general_organization_id" : ObjectId("5700a830ef2e2fd4201a7094"),
@@ -1926,6 +2133,9 @@
 //        "longitude" : 105.265907
 //    },
 //    "is_hq" : "no",
+//    "asset_size" : 0,
+//    "sales_size" : 0,
+//    "third_party_funds" : 0,
 //    "website" : "http://www.allianz.co.id",
 //    "hq_id" : ObjectId("5702a83a711f2e5e418af3cb"),
 //    "general_organization_id" : ObjectId("5700a830ef2e2fd4201a7094"),
@@ -1961,6 +2171,9 @@
 //        "longitude" : 119.491231
 //    },
 //    "is_hq" : "no",
+//    "asset_size" : 0,
+//    "sales_size" : 0,
+//    "third_party_funds" : 0,
 //    "website" : "http://www.allianz.co.id",
 //    "hq_id" : ObjectId("5702a83a711f2e5e418af3cb"),
 //    "general_organization_id" : ObjectId("5700a830ef2e2fd4201a7094"),
@@ -1996,6 +2209,9 @@
 //        "longitude" : 106.7909133
 //    },
 //    "is_hq" : "no",
+//    "asset_size" : 0,
+//    "sales_size" : 0,
+//    "third_party_funds" : 0,
 //    "website" : "http://www.allianz.co.id",
 //    "hq_id" : ObjectId("5702a83a711f2e5e418af3cb"),
 //    "general_organization_id" : ObjectId("5700a830ef2e2fd4201a7094"),
@@ -2032,6 +2248,9 @@
 //        "longitude" : 108.219312
 //    },
 //    "is_hq" : "no",
+//    "asset_size" : 0,
+//    "sales_size" : 0,
+//    "third_party_funds" : 0,
 //    "website" : "http://www.allianz.co.id",
 //    "hq_id" : ObjectId("5702a83a711f2e5e418af3cb"),
 //    "general_organization_id" : ObjectId("5700a830ef2e2fd4201a7094"),
@@ -2068,6 +2287,9 @@
 //        "longitude" : 110.5015935
 //    },
 //    "is_hq" : "no",
+//    "asset_size" : 0,
+//    "sales_size" : 0,
+//    "third_party_funds" : 0,
 //    "website" : "http://www.allianz.co.id",
 //    "hq_id" : ObjectId("5702a83a711f2e5e418af3cb"),
 //    "general_organization_id" : ObjectId("5700a830ef2e2fd4201a7094"),
@@ -2104,6 +2326,9 @@
 //        "longitude" : 109.247828
 //    },
 //    "is_hq" : "no",
+//    "asset_size" : 0,
+//    "sales_size" : 0,
+//    "third_party_funds" : 0,
 //    "website" : "http://www.allianz.co.id",
 //    "hq_id" : ObjectId("5702a83a711f2e5e418af3cb"),
 //    "general_organization_id" : ObjectId("5700a830ef2e2fd4201a7094"),
@@ -2140,6 +2365,9 @@
 //        "longitude" : 110.75559
 //    },
 //    "is_hq" : "no",
+//    "asset_size" : 0,
+//    "sales_size" : 0,
+//    "third_party_funds" : 0,
 //    "website" : "http://www.allianz.co.id",
 //    "hq_id" : ObjectId("5702a83a711f2e5e418af3cb"),
 //    "general_organization_id" : ObjectId("5700a830ef2e2fd4201a7094"),
@@ -2176,6 +2404,9 @@
 //        "longitude" : 110.81601
 //    },
 //    "is_hq" : "no",
+//    "asset_size" : 0,
+//    "sales_size" : 0,
+//    "third_party_funds" : 0,
 //    "website" : "http://www.allianz.co.id",
 //    "hq_id" : ObjectId("5702a83a711f2e5e418af3cb"),
 //    "general_organization_id" : ObjectId("5700a830ef2e2fd4201a7094"),
@@ -2209,6 +2440,9 @@
 //        "longitude" : 110.815391
 //    },
 //    "is_hq" : "no",
+//    "asset_size" : 0,
+//    "sales_size" : 0,
+//    "third_party_funds" : 0,
 //    "website" : "http://www.allianz.co.id",
 //    "hq_id" : ObjectId("5702a83a711f2e5e418af3cb"),
 //    "general_organization_id" : ObjectId("5700a830ef2e2fd4201a7094"),
@@ -2245,6 +2479,9 @@
 //        "longitude" : 113.21939
 //    },
 //    "is_hq" : "no",
+//    "asset_size" : 0,
+//    "sales_size" : 0,
+//    "third_party_funds" : 0,
 //    "website" : "http://www.allianz.co.id",
 //    "hq_id" : ObjectId("5702a83a711f2e5e418af3cb"),
 //    "general_organization_id" : ObjectId("5700a830ef2e2fd4201a7094"),
@@ -2280,6 +2517,9 @@
 //        "longitude" : 110.387137
 //    },
 //    "is_hq" : "no",
+//    "asset_size" : 0,
+//    "sales_size" : 0,
+//    "third_party_funds" : 0,
 //    "website" : "http://www.allianz.co.id",
 //    "hq_id" : ObjectId("5702a83a711f2e5e418af3cb"),
 //    "general_organization_id" : ObjectId("5700a830ef2e2fd4201a7094"),
@@ -2316,6 +2556,9 @@
 //        "longitude" : 112.643585
 //    },
 //    "is_hq" : "no",
+//    "asset_size" : 0,
+//    "sales_size" : 0,
+//    "third_party_funds" : 0,
 //    "website" : "http://www.allianz.co.id",
 //    "hq_id" : ObjectId("5702a83a711f2e5e418af3cb"),
 //    "general_organization_id" : ObjectId("5700a830ef2e2fd4201a7094"),
@@ -2352,6 +2595,9 @@
 //        "longitude" : 112.636009
 //    },
 //    "is_hq" : "no",
+//    "asset_size" : 0,
+//    "sales_size" : 0,
+//    "third_party_funds" : 0,
 //    "website" : "http://www.allianz.co.id",
 //    "hq_id" : ObjectId("5702a83a711f2e5e418af3cb"),
 //    "general_organization_id" : ObjectId("5700a830ef2e2fd4201a7094"),
@@ -2388,6 +2634,9 @@
 //        "longitude" : 112.634698
 //    },
 //    "is_hq" : "no",
+//    "asset_size" : 0,
+//    "sales_size" : 0,
+//    "third_party_funds" : 0,
 //    "website" : "http://www.allianz.co.id",
 //    "hq_id" : ObjectId("5702a83a711f2e5e418af3cb"),
 //    "general_organization_id" : ObjectId("5700a830ef2e2fd4201a7094"),
@@ -2424,6 +2673,9 @@
 //        "longitude" : 113.692595
 //    },
 //    "is_hq" : "no",
+//    "asset_size" : 0,
+//    "sales_size" : 0,
+//    "third_party_funds" : 0,
 //    "website" : "http://www.allianz.co.id",
 //    "hq_id" : ObjectId("5702a83a711f2e5e418af3cb"),
 //    "general_organization_id" : ObjectId("5700a830ef2e2fd4201a7094"),
@@ -2460,6 +2712,9 @@
 //        "longitude" : 114.364404
 //    },
 //    "is_hq" : "no",
+//    "asset_size" : 0,
+//    "sales_size" : 0,
+//    "third_party_funds" : 0,
 //    "website" : "http://www.allianz.co.id",
 //    "hq_id" : ObjectId("5702a83a711f2e5e418af3cb"),
 //    "general_organization_id" : ObjectId("5700a830ef2e2fd4201a7094"),
@@ -2496,6 +2751,9 @@
 //        "longitude" : 114.942842
 //    },
 //    "is_hq" : "no",
+//    "asset_size" : 0,
+//    "sales_size" : 0,
+//    "third_party_funds" : 0,
 //    "website" : "http://www.allianz.co.id",
 //    "hq_id" : ObjectId("5702a83a711f2e5e418af3cb"),
 //    "general_organization_id" : ObjectId("5700a830ef2e2fd4201a7094"),
@@ -2532,6 +2790,9 @@
 //        "longitude" : 116.137221
 //    },
 //    "is_hq" : "no",
+//    "asset_size" : 0,
+//    "sales_size" : 0,
+//    "third_party_funds" : 0,
 //    "website" : "http://www.allianz.co.id",
 //    "hq_id" : ObjectId("5702a83a711f2e5e418af3cb"),
 //    "general_organization_id" : ObjectId("5700a830ef2e2fd4201a7094"),
@@ -2568,6 +2829,9 @@
 //        "longitude" : 115.211743
 //    },
 //    "is_hq" : "no",
+//    "asset_size" : 0,
+//    "sales_size" : 0,
+//    "third_party_funds" : 0,
 //    "website" : "http://www.allianz.co.id",
 //    "hq_id" : ObjectId("5702a83a711f2e5e418af3cb"),
 //    "general_organization_id" : ObjectId("5700a830ef2e2fd4201a7094"),
@@ -2603,6 +2867,9 @@
 //        "longitude" : 115.228175
 //    },
 //    "is_hq" : "no",
+//    "asset_size" : 0,
+//    "sales_size" : 0,
+//    "third_party_funds" : 0,
 //    "website" : "http://www.allianz.co.id",
 //    "hq_id" : ObjectId("5702a83a711f2e5e418af3cb"),
 //    "general_organization_id" : ObjectId("5700a830ef2e2fd4201a7094"),
@@ -2639,6 +2906,9 @@
 //        "longitude" : 115.248769
 //    },
 //    "is_hq" : "no",
+//    "asset_size" : 0,
+//    "sales_size" : 0,
+//    "third_party_funds" : 0,
 //    "website" : "http://www.allianz.co.id",
 //    "hq_id" : ObjectId("5702a83a711f2e5e418af3cb"),
 //    "general_organization_id" : ObjectId("5700a830ef2e2fd4201a7094"),
@@ -2675,6 +2945,9 @@
 //        "longitude" : 115.198944
 //    },
 //    "is_hq" : "no",
+//    "asset_size" : 0,
+//    "sales_size" : 0,
+//    "third_party_funds" : 0,
 //    "website" : "http://www.allianz.co.id",
 //    "hq_id" : ObjectId("5702a83a711f2e5e418af3cb"),
 //    "general_organization_id" : ObjectId("5700a830ef2e2fd4201a7094"),
@@ -2711,6 +2984,9 @@
 //        "longitude" : 115.1768
 //    },
 //    "is_hq" : "no",
+//    "asset_size" : 0,
+//    "sales_size" : 0,
+//    "third_party_funds" : 0,
 //    "website" : "http://www.allianz.co.id",
 //    "hq_id" : ObjectId("5702a83a711f2e5e418af3cb"),
 //    "general_organization_id" : ObjectId("5700a830ef2e2fd4201a7094"),
@@ -2748,6 +3024,9 @@
 //        "longitude" : 115.178989
 //    },
 //    "is_hq" : "no",
+//    "asset_size" : 0,
+//    "sales_size" : 0,
+//    "third_party_funds" : 0,
 //    "website" : "http://www.allianz.co.id",
 //    "hq_id" : ObjectId("5702a83a711f2e5e418af3cb"),
 //    "general_organization_id" : ObjectId("5700a830ef2e2fd4201a7094"),

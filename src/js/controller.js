@@ -98,7 +98,7 @@ gisApp.controller("firstController", function ($scope, $http, uiGmapGoogleMapApi
         var checkbox = $event.target;
         $loading.start('body');
         if (checkbox.checked && $scope.poly_lists.length==0){
-            $http.get('src/js/IDN_adm_2_kabkota.json').then(function (data) {
+            $http.get('src/js/IDN_adm2_2.json').then(function (data) {
                 index = 0;
                 $scope.poly_lists[index]=[];
                 data.data.features.forEach(function (obj, k) {

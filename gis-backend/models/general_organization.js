@@ -5,7 +5,6 @@ var general_organizationSchema = new Schema ({
 	organization_type_id: Schema.Types.ObjectId,
 	conventional_type_id: Schema.Types.ObjectId,
 	type_id: Schema.Types.ObjectId,
-	sub_type_id: Schema.Types.ObjectId,
 	name: String
 });
 
